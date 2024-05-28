@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
 import SearchBar from '../components/SearchBar';
+import useAuth from "../utils/useAuth.js";
 
-const DiscoverPage = () => {
+const DiscoverPage = ({code}) => {
+  const accessToken = useAuth(code);
 
   return(
     <>
@@ -18,9 +20,10 @@ const DiscoverPage = () => {
           </div>
 
             <div>
-              
+              <p>{code}</p>
+
             </div>
-          
+
         </div>
         
       </div>
