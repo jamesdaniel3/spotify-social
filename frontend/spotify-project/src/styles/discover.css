@@ -30,7 +30,8 @@ html, body {
 
 .discover-title {
   margin-left: 50px;
-  font-size: 50px;
+  font-size: 3rem;
+  display: flex;
 }
 
 .left-section {
@@ -43,9 +44,16 @@ html, body {
   margin-left: -200px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
   .center-section {
       margin-left: 30px;
+  }
+
+}
+
+@media (max-width: 700px) {
+  .header {
+    display: block;
   }
 
 }
@@ -81,8 +89,16 @@ html, body {
   display: flex;
   /* align-items: center; */
   flex-direction: column;
-  width: calc(20% - 20px);
+  width: calc(15% - 20px);
     /* Initially 3 cards per row */
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1200px) {
+  #user-card {
+    width: calc(20% - 20px);
+    /* When screen size reduces, 2 cards per row */
+  }
 }
 
 @media (max-width: 1000px) {
@@ -99,7 +115,7 @@ html, body {
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   #user-card {
     width: calc(50% - 20px);
     /* When screen size reduces, 2 cards per row */
@@ -123,8 +139,8 @@ html, body {
 }
 
 .circle-container {
-  width: 10rem;
-  height: 10rem;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   /* Hides the parts of the image that exceed the circle */

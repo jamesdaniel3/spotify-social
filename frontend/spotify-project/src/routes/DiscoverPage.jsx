@@ -13,7 +13,7 @@ const DiscoverPage = ({code}) => {
     count += 1
   }
 
-  const userCards = Array.from({ length: 12 }, (_, index) => <UserCard key={index} />);
+  const userCards = Array.from({ length: 14 }, (_, index) => <UserCard key={index} />);
 
   return(
     <>

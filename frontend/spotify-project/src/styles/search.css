@@ -11,6 +11,15 @@
   cursor: pointer;
   transition: border 0.05s;
   transition: background-color 0.05s;
+
+  margin-right: 20px;
+}
+
+@media (max-width: 700px) {
+  .search-container {
+    justify-content: start;
+    margin-right: 40px;
+  }
 }
 
 .search-container:focus-within {
