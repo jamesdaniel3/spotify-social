@@ -2,13 +2,14 @@ import React from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import SongList from './SongList';
+import '../styles/tabbing.css'
 import ArtistList from './ArtistList';
 
 function Tabbing(props) {
   return (
     <Tabs
       defaultActiveKey="fourweeks"
-      className="mb-3"
+      className="tabbing"
     >
       <Tab eventKey="fourweeks" title="last four weeks">
         <SongList data = {props.short}></SongList>
