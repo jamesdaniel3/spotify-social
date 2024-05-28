@@ -7,16 +7,16 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
-    username: 'username',
-    bio: 'Music lover and Spotify enthusiast.',
-    favoriteGenres: 'Rock, Pop',
+    username: 'meetforge',
+    bio: 'based in cville | muscially inclined.',
+    favoriteGenres: 'indie, rock, pop',
     followers: 11,
     following: 30,
     topArtists: [
-      { id: 1, name: 'Alex G' },
-      { id: 2, name: 'Alex G' },
-      { id: 3, name: 'Alex G' },
-      { id: 4, name: 'Alex G' },
+      { id: 1, name: 'artist name' },
+      { id: 2, name: 'artist name' },
+      { id: 3, name: 'artist name' },
+      { id: 4, name: 'artist name' },
     ],
     topSongs: [
       { id: 1, title: 'song title' },
@@ -58,19 +58,22 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <img className="profile-pic" src="/spotify-logo.png" alt="Spotify Logo" />
+      <div className="profile-header" style={{ backgroundColor: '#D9D9D9' }}>
+        <img className="profile-pic" src="forge-logo.png" alt="Forge Logo" />
         <div className="profile-info">
           <h2 className="username">
             {profile.isPrivate && <span className="lock-icon">🔒</span>}
             {profile.username}
           </h2>
           <p>{profile.followers} followers {profile.following} following</p>
-        </div>
-        <button className="edit-button" onClick={() => setIsEditing(true)}>
-          Edit
+          <p>{profile.bio}</p>
+          <p>favorite genres: {profile.favoriteGenres}</p>
+          <button className="edit-button" onClick={() => setIsEditing(true)}>
+          edit profile
         </button>
+        </div>
       </div>
+      
 
       <Modal show={isEditing} onHide={() => setIsEditing(false)} dialogClassName="dark-modal">
         <Modal.Header closeButton>
@@ -117,6 +120,7 @@ const Profile = () => {
             checked={profile.displayTopArtists}
             onChange={handleCheckboxChange}
             name="displayTopArtists"
+            className="custom-checkbox"
           />
           <Form.Check
             type="checkbox"
@@ -125,6 +129,7 @@ const Profile = () => {
             checked={profile.displayLikedSongs}
             onChange={handleCheckboxChange}
             name="displayLikedSongs"
+            className="custom-checkbox"
           />
           <Form.Check
             type="checkbox"
@@ -133,21 +138,22 @@ const Profile = () => {
             checked={profile.isPrivate}
             onChange={handleCheckboxChange}
             name="isPrivate"
+            className="custom-checkbox"
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setIsEditing(false)}>
-            Close
+            close
           </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Save Changes
+          <Button className="save-button" onClick={handleSave}>
+            save changes
           </Button>
         </Modal.Footer>
       </Modal>
 
       <div className="profile-content">
         <div className="top-artists">
-          <h3>Top Artists</h3>
+          <h3>top artists</h3>
           <div className="artist-list">
             {profile.displayTopArtists && profile.topArtists.map((artist) => (
               <div className="artist-item" key={artist.id}>
@@ -158,7 +164,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="top-songs">
-          <h3>Top Songs</h3>
+          <h3>top songs</h3>
           <div className="song-list">
             {profile.displayLikedSongs && profile.topSongs.map((song) => (
               <div className="song-item" key={song.id}>
