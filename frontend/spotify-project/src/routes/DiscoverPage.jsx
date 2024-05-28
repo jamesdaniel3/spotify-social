@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
-import searchIconFocus from '../icons/search-icon-focus.png';
-import searchIcon from '../icons/search-icon.png';
+import SearchBar from '../components/SearchBar';
 
 const DiscoverPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
 
   return(
     <>
@@ -17,21 +14,7 @@ const DiscoverPage = () => {
           </div>
 
           <div className='center-section'>
-            <div className='search-container'>
-              <img src={isFocused ? searchIconFocus : searchIcon} className='search-icon' />
-              <input
-                maxLength="100"
-                placeholder='Search users'
-                className='search-box'
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-              />
-            </div>
-            
-
+            <SearchBar placeholder='Search users' />
           </div>
 
             <div>
