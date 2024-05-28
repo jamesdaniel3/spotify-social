@@ -1,0 +1,26 @@
+.artist-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.artist-card {
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  background-color: #1c1c1c;
+}
+
+.artist-image {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  border: 2px solid #fff;
+}
+
+.artist-name {
+  margin-top: 8px;
+  color: #fff;
+}
