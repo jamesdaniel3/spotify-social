@@ -1,0 +1,62 @@
+.top-artists-page {
+    background-color: #2c2c2c; /* Dark gray background */
+    min-height: 100vh; /* Ensure it covers the full height of the viewport */
+    padding: 20px; /* Optional: Add some padding */
+    color: #fff; /* White text color */
+  }
+  
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .nav-tabs {
+    background-color: transparent; /* Normal gray background for tabs and content */
+    border: 1px solid transparent; /* Border for better visibility */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .tab-content {
+    background-color: #a9a9a9; /* Normal gray background for tabs and content */
+    border: 1px solid transparent; /* Border for better visibility */
+    margin-top: -10.5px;
+    margin-left: 10px;
+  }
+  
+  .nav-tabs .nav-link {
+    color: black !important; /* Make tab text black */
+    background-color: #575757;
+    border-color: #ccc;
+  }
+  
+  .nav-tabs .nav-link.active {
+    background-color: #a9a9a9 !important; /* Gray background for active tab */
+    border-color: #ccc !important; /* Adjust the border color for the active tab */
+    color: black !important; /* Make active tab text black */
+    border-bottom-color: #a9a9a9 !important; /* Match active tab bottom border with its background */
+  }
+  
+  .artist-list {
+    justify-content: flex-start; /* Align items to the start (left) */
+  }
+  
+  .artist-card {
+    border: 2px solid #565555;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    background-color: #a9a9a9; /* Normal gray background for cards */
+  }
+  
+  .artist-image {
+    border-radius: 50%;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+    border: 2px solid #fff;
+  }
+  
+  .artist-name {
+    margin-top: 8px;
+    color: #fff;
+  }
+  
