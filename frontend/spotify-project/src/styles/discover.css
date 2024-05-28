@@ -16,18 +16,21 @@ html, body {
   height: 100vh;
 }
 
-.discover-title {
-  font-size: 50px;
-}
+/* header */
 
 .header {
   background-color: #191414;
   height: 150px;
   display: flex;
   align-items: center;
-  padding: 10px;
+  
   justify-content: space-between;
   position: relative;
+}
+
+.discover-title {
+  margin-left: 50px;
+  font-size: 50px;
 }
 
 .left-section {
@@ -45,4 +48,72 @@ html, body {
       margin-left: 30px;
   }
 
+}
+
+/* body */
+
+.discover-body {
+  margin-left: 50px;
+  margin-top: 25px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-shrink: 1;  */
+}
+
+.discover-subtitle {
+  font-size: 32px;
+  margin-bottom: 50px;
+}
+
+
+/* card section */
+
+#user-card {
+  background-color: #1F1F1F;
+  color: white;
+  width: 13rem;
+  border: none;
+  padding-top: 10px;
+
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+}
+
+
+#user-card:hover {
+  background-color: #292929;
+}
+
+#user-card:active {
+  background-color: #3b3b3b;
+}
+
+.top-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.circle-container {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  overflow: hidden;
+  /* Hides the parts of the image that exceed the circle */
+  /* border: 2px solid #000; */
+  /* Optional: Add border if needed */
+}
+
+.profile-image {
+  width: 100%;
+  /* Ensures the image fills the container */
+  height: auto;
+  /* Allows the image to maintain its aspect ratio */
+  align-items: start;
 }

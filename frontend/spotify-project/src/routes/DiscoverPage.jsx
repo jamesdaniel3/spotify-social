@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
 import SearchBar from '../components/SearchBar';
+import UserCard from '../components/UserCard';
 
 const DiscoverPage = () => {
+  const userCards = Array.from({ length: 12 }, (_, index) => <UserCard key={index} />);
+
 
   return(
     <>
@@ -18,8 +21,17 @@ const DiscoverPage = () => {
           </div>
 
             <div>
-              
             </div>
+          
+        </div>
+
+        <div className='discover-body'>
+          <div className='discover-subtitle'>recent searches</div>
+
+          <div className='card-container'>
+            { userCards }
+
+          </div>
           
         </div>
         
