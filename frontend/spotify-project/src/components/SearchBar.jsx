@@ -26,7 +26,7 @@ const SearchBar = ({placeholder, handleSearch}) => {
       </button>
 
       <input
-        maxLength="100"
+        maxLength="50"
         placeholder={placeholder}
         className='search-box'
         type="text"
