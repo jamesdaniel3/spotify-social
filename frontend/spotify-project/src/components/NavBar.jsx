@@ -10,7 +10,7 @@ const NavBar = () => {
     <>
         <Navbar expand={false}>
           <Container fluid>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${false}`} />
+            <Navbar.Toggle className = 'toggle-btn' aria-controls={`offcanvasNavbar-expand-${false}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${false}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${false}`}
@@ -27,6 +27,7 @@ const NavBar = () => {
                     <Nav.Link href="/top-artists">top artists</Nav.Link>
                     <Nav.Link href="/top-songs">top songs</Nav.Link>
                     <Nav.Link href="/forums">forums</Nav.Link>
+                    <Nav.Link href="/">log out</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
