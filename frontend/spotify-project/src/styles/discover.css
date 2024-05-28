@@ -86,7 +86,6 @@ html, body {
 #user-card {
   background-color: #1F1F1F;
   color: white;
-  width: 13rem;
   border: none;
   padding-top: 10px;
 
@@ -95,6 +94,8 @@ html, body {
   flex-direction: column;
   width: calc(15% - 20px);
     /* Initially 3 cards per row */
+  padding-left: 10px;
+  padding-right: 10px;
   margin-bottom: 10px;
 }
 
@@ -119,7 +120,7 @@ html, body {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
   #user-card {
     width: calc(50% - 20px);
     /* When screen size reduces, 2 cards per row */

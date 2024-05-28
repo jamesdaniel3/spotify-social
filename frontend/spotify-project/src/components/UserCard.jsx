@@ -1,6 +1,7 @@
 import React from 'react'
 
 import imageUrl from "../icons/logo.png"
+import '../styles/discover.css';
 
 import Card from 'react-bootstrap/Card';
 
