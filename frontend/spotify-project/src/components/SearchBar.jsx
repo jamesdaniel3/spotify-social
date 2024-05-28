@@ -12,14 +12,18 @@ const SearchBar = ({placeholder, handleSearch}) => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       console.log("entered");
-      //some handle search (handleSearch) functionality 
-      //if if they enter then itll call ur handle function 
+      //some handle search functionality - handleSearch(searchTerm);
+      //if they enter then itll call ur handle function 
     }
   };
 
   return (
     <div className='search-container'>
-      <img src={isFocused ? searchIconFocus : searchIcon} className='search-icon' />
+      <button className='search-icon-container'>
+        <img src={isFocused ? searchIconFocus : searchIcon} className='search-icon' />
+        {/* onClick={handleSearch(searchTerm)} */}
+      </button>
+
       <input
         maxLength="100"
         placeholder={placeholder}

@@ -62,3 +62,12 @@
   height: 35px;
   padding-bottom: 3px;
 }
+
+.search-icon-container {
+  background-color: transparent;
+  border: none;
+}
+
+.search-icon-container:active {
+  cursor: pointer;
+}
