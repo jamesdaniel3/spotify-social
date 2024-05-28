@@ -26,7 +26,6 @@ const NavBar = () => {
                     <Nav.Link href="/liked-songs">liked songs</Nav.Link>
                     <Nav.Link href="/top-artists">top artists</Nav.Link>
                     <Nav.Link href="/top-songs">top songs</Nav.Link>
-                    <Nav.Link href="/forums">forums</Nav.Link>
                     <Nav.Link href="/">log out</Nav.Link>
                 </Nav>
               </Offcanvas.Body>

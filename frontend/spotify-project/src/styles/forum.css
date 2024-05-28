@@ -1,0 +1,23 @@
+.forum{
+    max-width: 100%;
+    margin-left:3%;
+    margin-right:3%;
+}
+.post{
+    background-color: #424242;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    padding: 20px 20px 20px 20px;
+}
+.post-header .subject{
+    font-size: larger;
+    font-weight: 600;
+    margin:0;
+    padding: 0;
+}
+
+.post-header .user{
+    font-size: 15px;
+    margin:0;
+    padding: 0;
+}
