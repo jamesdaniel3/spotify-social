@@ -11,6 +11,7 @@ import TopSongs from './routes/TopSongs.jsx';
 import Profile from './routes/Profile.jsx';
 import Messages from './routes/Messages.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles/index.css';
 
 const App = () => {
   return (

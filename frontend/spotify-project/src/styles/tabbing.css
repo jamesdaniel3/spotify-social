@@ -1,0 +1,16 @@
+.tabbing{
+    margin: 0px 0px 10px 10px;
+    border: none !important;
+}
+.tabbing .nav-link{
+    color: white;
+}
+.tabbing .nav-link.active{
+    color: white !important;
+    background-color: #424242 !important;
+    border: none !important;
+}
+.tabbing .nav-link:hover{
+    color: white;
+    border-color: #424242 !important;
+}

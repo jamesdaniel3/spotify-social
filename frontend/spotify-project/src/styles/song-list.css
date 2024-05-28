@@ -1,0 +1,26 @@
+.songs{
+    margin: 0px 0px 10px 10px;
+    padding:0;
+    background-color: #424242;
+    border-radius: 4px;
+}
+.songs img{
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 10px;
+}
+.songs tr{
+    --bs-table-bg: transparent;
+}
+.songs td{
+    align-content: center;
+}
+.rounded-left{
+    border-radius: 4px 0 0 4px;
+}
+.rounded-right{
+    border-radius: 0 4px 4px 0;
+}
+.songs tr{
+    background: none;
+}

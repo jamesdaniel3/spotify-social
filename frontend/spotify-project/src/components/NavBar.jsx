@@ -8,7 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 const NavBar = () => {
   return (
     <>
-        <Navbar expand={false}>
+        <Navbar className='navbar-dark' expand={false}>
           <Container fluid>
             <Navbar.Toggle className = 'toggle-btn' aria-controls={`offcanvasNavbar-expand-${false}`} />
             <Navbar.Offcanvas
