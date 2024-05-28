@@ -42,7 +42,7 @@ const DiscoverPage = ({code}) => {
         </div>
         
       </div>
-      <p>{code}</p>
+      {/* <p>{code}</p> */}
     </>
   )
 }
