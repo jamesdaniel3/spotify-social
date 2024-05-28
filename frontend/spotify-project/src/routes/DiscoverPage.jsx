@@ -15,7 +15,6 @@ const DiscoverPage = ({code}) => {
 
   const userCards = Array.from({ length: 12 }, (_, index) => <UserCard key={index} />);
 
-
   return(
     <>
       <div className='discover-page'>
@@ -28,13 +27,9 @@ const DiscoverPage = ({code}) => {
             <SearchBar placeholder='Search users' />
           </div>
 
-            <div>
+            <div></div>
 
-            </div>
-
-            </div>
-          
-        </div>
+          </div>
 
         <div className='discover-body'>
           <div className='discover-subtitle'>recent searches</div>
