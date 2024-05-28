@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
 import SearchBar from '../components/SearchBar';
+import useAuth from "../utils/useAuth.js";
 
-const DiscoverPage = () => {
+let count = 0
+
+const DiscoverPage = ({code}) => {
+  if (!count){
+    const accessToken = useAuth(code);
+    count += 1
+  }
+
 
   return(
     <>
@@ -18,12 +26,13 @@ const DiscoverPage = () => {
           </div>
 
             <div>
-              
+
             </div>
-          
+
         </div>
         
       </div>
+      <p>{code}</p>
     </>
   )
 }
