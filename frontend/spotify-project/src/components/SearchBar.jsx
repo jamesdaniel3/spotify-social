@@ -20,8 +20,9 @@ const SearchBar = ({placeholder, handleSearch}) => {
   return (
     <div className='search-container'>
       <button className='search-icon-container'>
-        <img src={isFocused ? searchIconFocus : searchIcon} className='search-icon' />
+        <img src={isFocused ? searchIconFocus : searchIcon} className='search-icon' alt='Search Icon'/>
         {/* onClick={handleSearch(searchTerm)} */}
+        <div className='icon-tooltip'>Search</div>
       </button>
 
       <input
