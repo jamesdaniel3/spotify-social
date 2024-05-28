@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
+import SongList from '../components/SongList';
 const LikedSongs = () => {
-    // fetch liked songs data
+    const dummyData = [];
     return(
         <>
-            <p>LikedSongs</p>
+            <p>Liked Songs</p>
+            <SongList data={dummyData}></SongList>
         </>
     )
 }

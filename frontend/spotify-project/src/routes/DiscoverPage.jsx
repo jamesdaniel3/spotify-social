@@ -2,9 +2,17 @@ import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
 import SearchBar from '../components/SearchBar';
+import useAuth from "../utils/useAuth.js";
+
+let count = 0
 import UserCard from '../components/UserCard';
 
-const DiscoverPage = () => {
+const DiscoverPage = ({code}) => {
+  if (!count){
+    const accessToken = useAuth(code);
+    count += 1
+  }
+
   const userCards = Array.from({ length: 12 }, (_, index) => <UserCard key={index} />);
 
 
@@ -21,6 +29,9 @@ const DiscoverPage = () => {
           </div>
 
             <div>
+
+            </div>
+
             </div>
           
         </div>
@@ -36,6 +47,7 @@ const DiscoverPage = () => {
         </div>
         
       </div>
+      <p>{code}</p>
     </>
   )
 }
