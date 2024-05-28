@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
@@ -17,10 +17,11 @@ const App = () => {
     const [searchParams] = useSearchParams();
     const code = searchParams.get('code');
     const navigate = useNavigate();
+    const [userCode, setUserCode] = useState("");
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (code) {
-            navigate(`/?code=${code}`, { replace: true });
+            setUserCode(code)
         }
     }, [code, navigate]);
 
@@ -28,7 +29,7 @@ const App = () => {
         <>
             <NavBar />
             <Routes>
-                <Route path="/" element={code ? <DiscoverPage code={code} /> : <Login />} />
+                <Route path="/" element={userCode ? <DiscoverPage code={userCode} /> : <Login />} />
                 <Route path="/forums" element={<AllForums />} />
                 <Route path="/forums/:id" element={<SingleForum />} />
                 <Route path="/liked-songs" element={<LikedSongs />} />

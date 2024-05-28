@@ -4,8 +4,14 @@ import '../styles/discover.css';
 import SearchBar from '../components/SearchBar';
 import useAuth from "../utils/useAuth.js";
 
+let count = 0
+
 const DiscoverPage = ({code}) => {
-  const accessToken = useAuth(code);
+  if (!count){
+    const accessToken = useAuth(code);
+    count += 1
+  }
+
 
   return(
     <>
@@ -20,13 +26,13 @@ const DiscoverPage = ({code}) => {
           </div>
 
             <div>
-              <p>{code}</p>
 
             </div>
 
         </div>
         
       </div>
+      <p>{code}</p>
     </>
   )
 }
