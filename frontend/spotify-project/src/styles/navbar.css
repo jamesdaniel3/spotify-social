@@ -1,0 +1,12 @@
+/*figure out how to turn off the focus animation*/
+.toggle-btn {
+    transition: none !important;
+    -webkit-transition: none !important;
+    transition: none;
+    border: 1px;
+}
+.toggle-btn :focus {
+    box-shadow: none;
+    transition: none;
+    border: 1px;
+}
