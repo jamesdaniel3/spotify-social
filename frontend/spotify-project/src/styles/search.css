@@ -11,6 +11,15 @@
   cursor: pointer;
   transition: border 0.05s;
   transition: background-color 0.05s;
+
+  margin-right: 20px;
+}
+
+@media (max-width: 700px) {
+  .search-container {
+    justify-content: start;
+    margin-right: 40px;
+  }
 }
 
 .search-container:focus-within {
@@ -40,6 +49,7 @@
 }
 
 .search-box {
+  color: white;
   font-size: 18px;
   width: 340px;
   border-radius: 20px;
@@ -61,4 +71,40 @@
 .search-icon {
   height: 35px;
   padding-bottom: 3px;
+}
+
+.search-icon-container {
+  background-color: transparent;
+  border: none;
+}
+
+.search-icon-container:active {
+  cursor: pointer;
+}
+
+.icon-tooltip {
+  position: absolute;
+  color: white;
+  top: 105px;
+  margin-left: -15px;
+  z-index: 300;
+
+  font-size: 14px;
+
+  background-color: #292929;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
+
+  padding: 5px 8px 5px 8px;
+  border-radius: 3px;
+
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+}
+
+.search-icon-container:hover .icon-tooltip{
+  opacity: 1;
 }

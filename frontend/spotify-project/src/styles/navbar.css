@@ -10,3 +10,10 @@
     transition: none;
     border: 1px;
 }
+
+#nav {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    z-index: 500;
+}

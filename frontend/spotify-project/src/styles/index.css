@@ -3,3 +3,7 @@ body {
     background-color: #1F1F1F;
     color: white;
 }
+
+.d-flex {
+    margin-top: 50px;
+}
