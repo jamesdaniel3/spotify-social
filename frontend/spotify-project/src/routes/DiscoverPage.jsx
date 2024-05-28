@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
+import UserCard from '../components/UserCard';
+import NavBar from '../components/NavBar.jsx';
+
 import SearchBar from '../components/SearchBar';
 import useAuth from "../utils/useAuth.js";
 
 let count = 0
-import UserCard from '../components/UserCard';
 
 const DiscoverPage = ({code}) => {
   if (!count){
@@ -27,7 +29,7 @@ const DiscoverPage = ({code}) => {
             <SearchBar placeholder='Search users' />
           </div>
 
-            <div></div>
+            <div> </div>
 
           </div>
 
@@ -35,6 +37,7 @@ const DiscoverPage = ({code}) => {
           <div className='discover-subtitle'>recent searches</div>
 
           <div className='card-container'>
+            {/* on click link to profile  */}
             { userCards }
 
           </div>

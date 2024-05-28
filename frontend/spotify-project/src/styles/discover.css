@@ -14,6 +14,8 @@ html, body {
   color: white;
   font-family: Roboto;
   height: 100vh;
+  z-index: 1;
+  position: absolute;
 }
 
 /* header */
@@ -26,6 +28,7 @@ html, body {
   
   justify-content: space-between;
   position: relative;
+  padding-left: 40px;
 }
 
 .discover-title {
@@ -44,7 +47,7 @@ html, body {
   margin-left: -200px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .center-section {
       margin-left: 30px;
   }
@@ -54,6 +57,7 @@ html, body {
 @media (max-width: 700px) {
   .header {
     display: block;
+    padding-left: 55px;
   }
 
 }
