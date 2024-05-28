@@ -25,14 +25,17 @@ const SongList = (props) => {
     ]
   return (
     <Table borderless className='songs' variant='dark'>
+      {/*
+      maybe delete the header?
       <thead>
-        <tr>
+        <tr className='head'>
           <th>#</th>
           <th>Title</th>
           <th>Album</th>
           <th>Artist</th>
         </tr>
       </thead>
+      */}
       <tbody>
         {dummyData.map((song, idx)=>{
             return(
