@@ -39,7 +39,7 @@ const Messages = ({ profileInfo }) => {
             const existingChatIndex = displayNames.findIndex(
                 (chatEntry) =>
                     chatEntry.chatId === chat.id &&
-                    JSON.stringify(chatEntry.participants) === JSON.stringify(participantDisplayNames)
+                    JSON.stringify(chatEntry.participants.sort()) === JSON.stringify(participantDisplayNames.sort())
             );
 
             if (existingChatIndex === -1) {
