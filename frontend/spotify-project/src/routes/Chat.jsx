@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function Chat() {
+export default function Chat( {profileInfo}) {
     const { id } = useParams();
+    let sender = "XX"
+    if(profileInfo){
+        sender = profileInfo.id;
+    }
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
@@ -39,6 +43,7 @@ export default function Chat() {
     }, [id]);
 
     console.log("Messages:", messages);
+    console.log(sender)
 
     return (
         <>
