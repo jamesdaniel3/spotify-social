@@ -31,6 +31,7 @@ app.get(`/login`, (request, response) => {
         'user-read-private',
         'user-read-email',
         'user-top-read',
+        'user-library-read',
     ].join(' ');
 
     const queryParams = queryString.stringify({

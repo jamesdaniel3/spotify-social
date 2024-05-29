@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {getCurrentUserProfile, getTopArtists, getTopSongs} from "./Spotify.js";
+import {getCurrentUserProfile, getTopArtists, getTopSongs, getLikedSongs} from "./Spotify.js";
 
 const grabSpotifyData = () => {
     const [profile, setProfile] = useState(null);
@@ -9,6 +9,7 @@ const grabSpotifyData = () => {
     const [topSongsShort, setTopSongsShort] = useState([]);
     const [topSongsMedium, setTopSongsMedium] = useState([]);
     const [topSongsLong, setTopSongsLong] = useState([]);
+    const [likedSongs, setLikedSongs] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +36,11 @@ const grabSpotifyData = () => {
                 setTopSongsShort(userTopSongShort.data);
                 setTopSongsMedium(userTopSongMedium.data);
                 setTopSongsLong(userTopSongLong.data);
+
+                const likedSongsResponse = await getLikedSongs();
+                setLikedSongs(likedSongsResponse.data);
+
+
             } catch (e) {
                 console.error(e);
             }
@@ -51,6 +57,7 @@ const grabSpotifyData = () => {
         topSongsShort,
         topSongsMedium,
         topSongsLong,
+        likedSongs,
     };
 };
 
