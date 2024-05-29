@@ -15,7 +15,7 @@ const DiscoverPage = () => {
   ];
   
   const [searchTerm, setSearchTerm] = useState("");
-  const [allData, setAllData] = useState(initialUsers); //array of user data 
+  const [allData, setAllData] = useState([]); //array of user data 
 
   const fetchData = async () => {
     try {
@@ -29,7 +29,6 @@ const DiscoverPage = () => {
   useEffect(() => {
     fetchData();
     console.log(allData);
-    allData.push
   }, []);
 
 
@@ -69,7 +68,7 @@ const DiscoverPage = () => {
           <div className='card-container'>
             {filteredData.length > 0 ? (
               filteredData.map((val, key) => (
-                <UserCard username={val.display_name}/>
+                <UserCard username={val.display_name} key={key}/>
               ))
             ) : (
               <div className='no-results'>None found</div>

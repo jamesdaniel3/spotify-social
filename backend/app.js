@@ -10,6 +10,11 @@ const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
 console.log(redirectURI)
 
+const db = require("./firebase");
+
+const cors = require("cors");
+app.use(cors());
+
 const generateRandomString = length => {
     let text = ``;
     const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
@@ -22,6 +27,24 @@ const generateRandomString = length => {
 }
 
 const stateKey = `spotify_auth_state`
+
+// get all users
+app.get("/posts", async (req, res) => {
+    try {
+        let ret = [];
+        const querySnapshot = await db.collection("users").get();
+        querySnapshot.forEach((doc) => {
+            ret.push({
+                id: doc.id,
+                ...doc.data(),
+            });
+        });
+        res.status(200).json(ret);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
 
 app.get(`/login`, (request, response) => {
     const state = generateRandomString(16)
