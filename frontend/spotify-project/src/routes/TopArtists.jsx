@@ -2,10 +2,10 @@ import React from 'react';
 import TabbingArtists from '../components/TabbingArtists';
 import '../styles/topArtists.css'; // Ensure the correct path to your CSS file
 
-const TopArtists = ( {artists}) => {
-  console.log(artists[0]);
-  console.log(artists[1]);
-  console.log(artists[2]);
+const TopArtists = ({ topArtistsShort, topArtistsMedium, topArtistsLong }) => {
+  console.log(topArtistsShort);
+  console.log(topArtistsMedium);
+  console.log(topArtistsLong);
 
   // Placeholder data
   const data = {
