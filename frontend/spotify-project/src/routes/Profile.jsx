@@ -5,7 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
-const Profile = () => {
+const Profile = ({ profileInfo }) => {
+  console.log('Profile data:', profileInfo);
   const [profile, setProfile] = useState({
     username: 'meetforge',
     bio: 'based in cville | muscially inclined.',

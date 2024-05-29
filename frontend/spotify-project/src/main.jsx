@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { accessToken, logout, getCurrentUserProfile, getTopArtists, getTopSongs } from './utils/Spotify';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
@@ -15,29 +16,67 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
 const App = () => {
-    const [searchParams] = useSearchParams();
-    const code = searchParams.get('code');
-    const navigate = useNavigate();
     const [userCode, setUserCode] = useState("");
+    const [token, setToken] = useState(null);
+    const [profile, setProfile] = useState(null);
+
+    const [topArtistsShort, setTopArtistsShort] = useState([]);
+    const [topArtistsMedium, setTopArtistsMedium] = useState([]);
+    const [topArtistsLong, setTopArtistsLong] = useState([]);
+
+    const [topSongsShort, setTopSongsShort] = useState([]);
+    const [topSongsMedium, setTopSongsMedium] = useState([]);
+    const [topSongsLong, setTopSongsLong] = useState([]);
 
     useEffect(() => {
-        if (code) {
-            setUserCode(code)
-        }
-    }, [code, navigate]);
+        setToken(accessToken);
+
+        const fetchData = async () => {
+            try {
+                const { data } = await getCurrentUserProfile();
+                setProfile((prevProfile) => {
+                    return data;
+                });
+
+                let userTopArtist = await getTopArtists();
+                setTopArtistsShort(userTopArtist.data);
+
+                userTopArtist = await getTopArtists("medium_term");
+                setTopArtistsMedium(userTopArtist.data);
+
+                userTopArtist = await getTopArtists("long_term");
+                setTopArtistsLong(userTopArtist.data);
+
+
+                let userTopSong = await getTopSongs();
+                setTopSongsShort(userTopSong.data);
+
+                userTopSong = await getTopSongs("medium_term");
+                setTopSongsMedium(userTopSong.data);
+
+                userTopSong = await getTopSongs("long_term");
+                setTopSongsLong(userTopSong.data);
+
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchData();
+    }, []);
+
 
     return (
         <>
             <NavBar />
             <Routes>
-                <Route path="/" element={userCode ? <DiscoverPage code={userCode} /> : <Login />} />
+                <Route path="/" element={profile ? <DiscoverPage /> : <Login />} />
                 <Route path="/forums" element={<AllForums />} />
                 <Route path="/forums/:id" element={<SingleForum />} />
                 <Route path="/liked-songs" element={<LikedSongs />} />
-                <Route path="/top-artists" element={<TopArtists />} />
-                <Route path="/top-songs" element={<TopSongs />} />
+                <Route path="/top-artists" element={<TopArtists topArtistsShort={topArtistsShort} topArtistsMedium={topArtistsMedium} topArtistsLong={topArtistsLong} />} />
+                <Route path="/top-songs" element={<TopSongs topSongsShort={topSongsShort} topSongsMedium={topSongsMedium} topSongsLong={topSongsLong} />} />
                 <Route path="/messages" element={<Messages />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile profileInfo={profile} />} />
             </Routes>
         </>
     );
