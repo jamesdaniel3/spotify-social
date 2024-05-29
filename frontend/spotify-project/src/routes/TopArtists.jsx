@@ -1,8 +1,14 @@
 import React from 'react';
 import TabbingArtists from '../components/TabbingArtists';
-import '../styles/topArtists.css'; // Ensure the correct path to your CSS file
+import '../styles/topArtists.css'; 
+import Header from '../components/Header';
 
-const TopArtists = () => {
+
+const TopArtists = ({ topArtistsShort, topArtistsMedium, topArtistsLong }) => {
+  console.log(topArtistsShort);
+  console.log(topArtistsMedium);
+  console.log(topArtistsLong);
+
   // Placeholder data
   const data = {
     short: [
@@ -20,10 +26,14 @@ const TopArtists = () => {
   };
 
   return (
+    <>
+    <Header title={"top artists"}/>
     <div className="top-artists-page">
-      <h1 className="page-title">Top Artists</h1>
       <TabbingArtists short={data.short} medium={data.medium} long={data.long} />
     </div>
+
+    </>
+
   );
 };
 
