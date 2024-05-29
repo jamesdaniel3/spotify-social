@@ -24,9 +24,26 @@ app.post('/api/chats', async (req, res) => {
             .where('participants', 'array-contains', userId)
             .get();
 
-        const chats = querySnapshot.docs.map((doc) => doc.data());
+        // Create a map to store chat document IDs and their participants
+        const chatMap = new Map();
 
-        res.json(chats);
+        // Iterate over the query results and populate the map
+        querySnapshot.docs.forEach((doc) => {
+            const chatData = doc.data();
+            const chatId = doc.id;
+            const participants = chatData.participants;
+
+            // Add the chat ID and participants to the map
+            chatMap.set(chatId, participants);
+        });
+
+        // Convert the map to an array of objects for easier JSON serialization
+        const chatArray = Array.from(chatMap.entries()).map(([chatId, participants]) => ({
+            chatId,
+            participants
+        }));
+
+        res.json(chatArray);
     } catch (error) {
         console.error('Error fetching chats:', error);
         res.status(500).json({ error: 'An error occurred while fetching chats' });
