@@ -69,6 +69,44 @@ app.get('/api/users/:userId', async (req, res) => {
     }
 });
 
+app.get('/api/chats/:chatId/messages', async (req, res) => {
+    try {
+        const chatId = req.params.chatId;
+
+        // Retrieve the chat document
+        const chatDoc = await db.collection('chats').doc(chatId).get();
+
+        if (!chatDoc.exists) {
+            return res.status(404).json({ error: 'Chat not found' });
+        }
+
+        const chatData = chatDoc.data();
+        const messageIds = chatData.messages;
+
+        // Retrieve the message documents
+        const messageRefs = messageIds.map((messageId) =>
+            db.collection('messages').doc(messageId).get()
+        );
+        const messageSnapshots = await Promise.all(messageRefs);
+
+        // Extract the message data
+        const messages = messageSnapshots.map((messageSnapshot) => {
+            const messageData = messageSnapshot.data();
+            return {
+                content: messageData.content,
+                sender: messageData.sender,
+                timestamp: messageData.timestamp,
+            };
+        });
+
+        res.json(messages);
+    } catch (error) {
+        console.error('Error retrieving messages:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 const generateRandomString = length => {
     let text = ``;
     const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
