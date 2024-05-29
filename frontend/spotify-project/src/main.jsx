@@ -12,6 +12,7 @@ import TopSongs from './routes/TopSongs.jsx';
 import Profile from './routes/Profile.jsx';
 import Messages from './routes/Messages.jsx';
 import Login from './routes/Login.jsx';
+import Chat from "./routes/Chat.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
@@ -37,8 +38,9 @@ const App = () => {
                 <Route path="/liked-songs" element={<LikedSongs likedSongs={likedSongs} />} />
                 <Route path="/top-artists" element={<TopArtists topArtistsShort={topArtistsShort} topArtistsMedium={topArtistsMedium} topArtistsLong={topArtistsLong} />} />
                 <Route path="/top-songs" element={<TopSongs topSongsShort={topSongsShort} topSongsMedium={topSongsMedium} topSongsLong={topSongsLong} />} />
-                <Route path="/messages" element={<Messages />} />
+                <Route path="/messages" element={<Messages profileInfo={profile} />} />
                 <Route path="/profile" element={<Profile profileInfo={profile} />} />
+                <Route path="/chats/:id" element={<Chat profileInfo={profile}/>} />
             </Routes>
         </>
     );

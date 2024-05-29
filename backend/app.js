@@ -1,14 +1,141 @@
 require(`dotenv`).config();
+const cors = require('cors');
 const express = require(`express`);
 const queryString = require(`querystring`);
 const axios = require(`axios`);
+const db = require('./firebase');
+const admin = require('firebase-admin');
+const { FieldValue } = admin.firestore;
 const app = express();
 const port = 8888;
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
-console.log(redirectURI)
+
+
+app.use(cors());
+app.use(express.json());
+
+app.post('/api/chats', async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        // Query the 'chats' collection for documents where the 'participants' array contains the user's ID
+        const querySnapshot = await db.collection('chats')
+            .where('participants', 'array-contains', userId)
+            .get();
+
+        // Create a map to store chat document IDs and their participants
+        const chatMap = new Map();
+
+        // Iterate over the query results and populate the map
+        querySnapshot.docs.forEach((doc) => {
+            const chatData = doc.data();
+            const chatId = doc.id;
+            const participants = chatData.participants;
+
+            // Add the chat ID and participants to the map
+            chatMap.set(chatId, participants);
+        });
+
+        // Convert the map to an array of objects for easier JSON serialization
+        const chatArray = Array.from(chatMap.entries()).map(([chatId, participants]) => ({
+            chatId,
+            participants
+        }));
+
+        res.json(chatArray);
+    } catch (error) {
+        console.error('Error fetching chats:', error);
+        res.status(500).json({ error: 'An error occurred while fetching chats' });
+    }
+});
+
+app.get('/api/users/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        // Query the 'users' collection for the document with the given ID
+        const userDoc = await db.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            res.json({ displayName: userData.display_name });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'An error occurred while fetching user' });
+    }
+});
+
+
+app.post('/api/chats/:chatId/messages', async (req, res) => {
+    try {
+        const chatId = req.params.chatId;
+        const { content, sender } = req.body;
+
+        // Create a new message document in the 'messages' collection
+        const messageRef = await db.collection('messages').add({
+            content: content,
+            sender: sender,
+            timestamp: new Date().toISOString(),
+        });
+
+        // Get the ID of the newly created message document
+        const messageId = messageRef.id;
+
+        // Update the 'messages' array in the chat document
+        await db.collection('chats').doc(chatId).update({
+            messages: FieldValue.arrayUnion(messageId),
+        });
+
+        res.status(201).json({ message: 'Message sent successfully' });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.get('/api/chats/:chatId/messages', async (req, res) => {
+    try {
+        const chatId = req.params.chatId;
+
+        // Retrieve the chat document
+        const chatDoc = await db.collection('chats').doc(chatId).get();
+
+        if (!chatDoc.exists) {
+            return res.status(404).json({ error: 'Chat not found' });
+        }
+
+        const chatData = chatDoc.data();
+        const messageIds = chatData.messages;
+
+        // Retrieve the message documents
+        const messageRefs = messageIds.map((messageId) =>
+            db.collection('messages').doc(messageId).get()
+        );
+        const messageSnapshots = await Promise.all(messageRefs);
+
+        // Extract the message data
+        const messages = messageSnapshots.map((messageSnapshot) => {
+            const messageData = messageSnapshot.data();
+            return {
+                content: messageData.content,
+                sender: messageData.sender,
+                timestamp: messageData.timestamp,
+            };
+        });
+
+        res.json(messages);
+    } catch (error) {
+        console.error('Error retrieving messages:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 const generateRandomString = length => {
     let text = ``;
