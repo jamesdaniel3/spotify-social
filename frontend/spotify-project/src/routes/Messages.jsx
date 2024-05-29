@@ -3,13 +3,15 @@ import axios from 'axios';
 
 const Messages = ({ profileInfo }) => {
     const [chats, setChats] = useState([]);
-    const [displayNames, setDisplayNames] = useState({});
+    const [displayNames, setDisplayNames] = useState([]);
+    const [displayNamesUpdated, setDisplayNamesUpdated] = useState(false);
 
     useEffect(() => {
         const fetchChats = async () => {
             try {
                 const response = await axios.post('http://localhost:8888/api/chats', { userId: profileInfo.id });
                 setChats(response.data);
+                setDisplayNamesUpdated(false);
             } catch (error) {
                 console.error('Error fetching chats:', error);
             }
@@ -34,25 +36,34 @@ const Messages = ({ profileInfo }) => {
                 })
             );
 
-            setDisplayNames((prevDisplayNames) => ({
-                ...prevDisplayNames,
-                [chat.id]: participantDisplayNames,
-            }));
+            const existingChatIndex = displayNames.findIndex(
+                (chatEntry) =>
+                    chatEntry.chatId === chat.id &&
+                    JSON.stringify(chatEntry.participants) === JSON.stringify(participantDisplayNames)
+            );
+
+            if (existingChatIndex === -1) {
+                setDisplayNames((prevDisplayNames) => [
+                    ...prevDisplayNames,
+                    { chatId: chat.id, participants: participantDisplayNames },
+                ]);
+            }
         };
 
-        chats.forEach(fetchDisplayNamesForChat);
-    }, [chats]);
+        if (!displayNamesUpdated) {
+            chats.forEach(fetchDisplayNamesForChat);
+            setDisplayNamesUpdated(true);
+        }
+    }, [chats, displayNames, displayNamesUpdated]);
 
     return (
         <>
             <h2>Messages</h2>
-            {chats.length > 0 ? (
+            {displayNames.length > 0 ? (
                 <ul>
-                    {chats.map((chat, index) => (
+                    {displayNames.map(({ chatId, participants }, index) => (
                         <li key={index}>
-                            <p>
-                                Participants: {displayNames[chat.id]?.join(', ') || 'Loading...'}
-                            </p>
+                            <p>Participants: {participants.join(', ')}</p>
                             {/* Add more chat details here */}
                         </li>
                     ))}
