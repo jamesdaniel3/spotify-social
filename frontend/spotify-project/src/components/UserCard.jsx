@@ -5,7 +5,7 @@ import '../styles/discover.css';
 
 import Card from 'react-bootstrap/Card';
 
-const UserCard = () => {
+const UserCard = ( {username} ) => {
   return (
     <Card id='user-card'>
       <div className='top-container'>
@@ -16,7 +16,7 @@ const UserCard = () => {
       
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body id='card-body'>
-        <Card.Title id='card-title'>Username</Card.Title>
+        <Card.Title id='card-title'>{username}</Card.Title>
         <Card.Text id='card-text'>
           Profile
         </Card.Text>
