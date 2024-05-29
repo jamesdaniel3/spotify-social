@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import grabSpotifyData from "./utils/GrabSpotifyData.js";
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
 import DiscoverPage from './routes/DiscoverPage.jsx';
 import SingleForum from './routes/SingleForum.jsx';
@@ -16,9 +16,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
 const App = () => {
-    const [userCode, setUserCode] = useState("");
-    const [token, setToken] = useState(null);
-
     const {
         profile,
         topArtistsShort,
