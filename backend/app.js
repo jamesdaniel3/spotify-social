@@ -1,14 +1,56 @@
 require(`dotenv`).config();
+const cors = require('cors');
 const express = require(`express`);
 const queryString = require(`querystring`);
 const axios = require(`axios`);
+const db = require('./firebase');
 const app = express();
 const port = 8888;
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
-console.log(redirectURI)
+
+
+app.use(cors());
+app.use(express.json());
+
+app.post('/api/chats', async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        // Query the 'chats' collection for documents where the 'participants' array contains the user's ID
+        const querySnapshot = await db.collection('chats')
+            .where('participants', 'array-contains', userId)
+            .get();
+
+        const chats = querySnapshot.docs.map((doc) => doc.data());
+
+        res.json(chats);
+    } catch (error) {
+        console.error('Error fetching chats:', error);
+        res.status(500).json({ error: 'An error occurred while fetching chats' });
+    }
+});
+
+app.get('/api/users/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        // Query the 'users' collection for the document with the given ID
+        const userDoc = await db.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            res.json({ displayName: userData.display_name });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'An error occurred while fetching user' });
+    }
+});
 
 const generateRandomString = length => {
     let text = ``;

@@ -38,7 +38,7 @@ const App = () => {
                 <Route path="/liked-songs" element={<LikedSongs likedSongs={likedSongs} />} />
                 <Route path="/top-artists" element={<TopArtists topArtistsShort={topArtistsShort} topArtistsMedium={topArtistsMedium} topArtistsLong={topArtistsLong} />} />
                 <Route path="/top-songs" element={<TopSongs topSongsShort={topSongsShort} topSongsMedium={topSongsMedium} topSongsLong={topSongsLong} />} />
-                <Route path="/messages" element={<Messages />} />
+                <Route path="/messages" element={<Messages profileInfo={profile} />} />
                 <Route path="/profile" element={<Profile profileInfo={profile} />} />
             </Routes>
         </>
