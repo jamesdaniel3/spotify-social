@@ -175,3 +175,27 @@ html, body {
   box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.75);
     /* Add box shadow */
 }
+
+.profile-link {
+  text-decoration: none;
+  color: white;
+}
+
+/* error*/
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.error-container-inner {
+  display: block;
+}
+
+.error-image {
+  height: 300px;
+}

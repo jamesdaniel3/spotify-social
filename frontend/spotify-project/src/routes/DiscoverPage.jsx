@@ -6,14 +6,9 @@ import UserCard from '../components/UserCard';
 import NavBar from '../components/NavBar.jsx';
 import SearchBar from '../components/SearchBar';
 
-const DiscoverPage = () => {
+import ErrorIcon from '../icons/search-error-icon.png'
 
-  const initialUsers = [
-    { display_name: 'John Doe', id: 1 },
-    { display_name: 'Jane Smith', id: 2 },
-    { display_name: 'rob Smith', id: 3 }
-  ];
-  
+const DiscoverPage = () => { 
   const [searchTerm, setSearchTerm] = useState("");
   const [allData, setAllData] = useState([]); //array of user data 
 
@@ -28,11 +23,9 @@ const DiscoverPage = () => {
 
   useEffect(() => {
     fetchData();
-    console.log(allData);
+    // console.log(allData);
   }, []);
 
-
-  // const userCards = Array.from({ length: 14 }, (_, index) => <UserCard key={index} />);
 
   const filteredData = allData.filter((val) => {
     if (searchTerm === "") {
@@ -61,21 +54,40 @@ const DiscoverPage = () => {
 
           <div></div>
         </div>
-
         <div className='discover-body'>
-          <div className='discover-subtitle'>recent searches</div>
+          {searchTerm && (
+            <div>
+              {filteredData.length > 0 ? (
+                <div>
+                  <div className='discover-subtitle'>top users</div>
+                  <div className='card-container'>
+                  </div>
+                  
+                  {filteredData.map((val, key) => (
+            
+                    <UserCard username={val.display_name} key={key} />
+                    
+                  ))}
+                </div>
+              ) : (
+                  <div className='error-container'>
+                    <div className='error-container-inner'>
+                      <img src={ErrorIcon} alt="Error Icon" className="error-image" />
+                      <div className='no-results'>No users found with name: {searchTerm}</div>
+                  </div>
+                  </div>
+              )}
+            </div>
 
-          <div className='card-container'>
-            {filteredData.length > 0 ? (
-              filteredData.map((val, key) => (
-                <UserCard username={val.display_name} key={key}/>
-              ))
-            ) : (
-              <div className='no-results'>None found</div>
-            )}
+          )}  
 
-          </div>
-        </div>
+          {!searchTerm && (
+            <div className='discover-subtitle'>recent searches</div>
+          )} 
+</div>
+
+
+        
       </div>
     </>
   )
