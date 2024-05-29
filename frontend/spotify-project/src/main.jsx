@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { accessToken, logout, getCurrentUserProfile, getTopArtists, getTopSongs } from './utils/Spotify';
+import grabSpotifyData from "./utils/GrabSpotifyData.js";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
@@ -18,51 +18,16 @@ import './styles/index.css';
 const App = () => {
     const [userCode, setUserCode] = useState("");
     const [token, setToken] = useState(null);
-    const [profile, setProfile] = useState(null);
 
-    const [topArtistsShort, setTopArtistsShort] = useState([]);
-    const [topArtistsMedium, setTopArtistsMedium] = useState([]);
-    const [topArtistsLong, setTopArtistsLong] = useState([]);
-
-    const [topSongsShort, setTopSongsShort] = useState([]);
-    const [topSongsMedium, setTopSongsMedium] = useState([]);
-    const [topSongsLong, setTopSongsLong] = useState([]);
-
-    useEffect(() => {
-        setToken(accessToken);
-
-        const fetchData = async () => {
-            try {
-                const { data } = await getCurrentUserProfile();
-                setProfile((prevProfile) => {
-                    return data;
-                });
-
-                let userTopArtist = await getTopArtists();
-                setTopArtistsShort(userTopArtist.data);
-
-                userTopArtist = await getTopArtists("medium_term");
-                setTopArtistsMedium(userTopArtist.data);
-
-                userTopArtist = await getTopArtists("long_term");
-                setTopArtistsLong(userTopArtist.data);
-
-
-                let userTopSong = await getTopSongs();
-                setTopSongsShort(userTopSong.data);
-
-                userTopSong = await getTopSongs("medium_term");
-                setTopSongsMedium(userTopSong.data);
-
-                userTopSong = await getTopSongs("long_term");
-                setTopSongsLong(userTopSong.data);
-
-            } catch (e) {
-                console.error(e);
-            }
-        };
-        fetchData();
-    }, []);
+    const {
+        profile,
+        topArtistsShort,
+        topArtistsMedium,
+        topArtistsLong,
+        topSongsShort,
+        topSongsMedium,
+        topSongsLong,
+    } = grabSpotifyData();
 
 
     return (
