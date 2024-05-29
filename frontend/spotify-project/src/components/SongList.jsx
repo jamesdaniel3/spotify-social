@@ -25,9 +25,9 @@ const SongList = (props) => {
     ]
   return (
     <div className='tableDiv'>
-          <Table borderless className='songs' variant='dark'>
+      <Table borderless className='songs bigger-screens' variant='dark'>
       {/*
-      maybe delete the header?
+      I commented out table header:
       <thead>
         <tr className='head'>
           <th>#</th>
@@ -37,22 +37,38 @@ const SongList = (props) => {
         </tr>
       </thead>
       */}
-      <tbody>
-        {dummyData.map((song, idx)=>{
+        <tbody>
+          {dummyData.map((song, idx)=>{
             return(
-                <tr>
-                    <td className='rounded-left'>{idx}</td>
-                    <td>
-                      <img src = {song.img}/>
-                        {song.title}
-                    </td>
-                    <td>{song.album}</td>
-                    <td className='rounded-right'>{song.artist}</td>
-                </tr>
+              <tr>
+                  <td className='rounded-left'>{idx}</td>
+                  <td>
+                    <img src = {song.img}/>
+                      {song.title}
+                  </td>
+                  <td>{song.album}</td>
+                  <td className='rounded-right'>{song.artist}</td>
+              </tr>
             )
-        })}
-      </tbody>
-    </Table>
+          })}
+        </tbody>
+      </Table>
+      <Table borderless className='songs smaller-screens' variant='dark'>
+        <tbody>
+          {dummyData.map((song, idx)=>{
+            return(
+              <tr>
+                  <td className='rounded-left'>{idx}</td>
+                  <td>
+                    <img src = {song.img}/>
+                      {song.title}
+                  </td>
+                  <td className='rounded-right'>{song.artist}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </Table>
     </div>
   );
 }

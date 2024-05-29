@@ -30,7 +30,6 @@ const App = () => {
 
     return (
         <>
-            <NavBar />
             <Routes>
                 <Route path="/" element={profile ? <DiscoverPage /> : <Login />} />
                 <Route path="/forums" element={<AllForums />} />

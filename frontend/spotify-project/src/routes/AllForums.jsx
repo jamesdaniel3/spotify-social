@@ -3,6 +3,7 @@ import SearchBar from '../components/SearchBar'
 import Table from 'react-bootstrap/Table';
 import '../styles/song-list.css'
 import { useNavigate, Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 
 const AllForums = () => {
@@ -61,21 +62,22 @@ const AllForums = () => {
     }
     return(
         <>
-            <p>forums</p>
-            <SearchBar placeholder={"search"}></SearchBar>
-            <Table hover borderless className='songs' variant='dark'>
-                <tbody>
-                    {dummyData.map((forum, idx)=>{
-                        return(
-                            <tr onClick={()=>handleClick(forum.id)}>
-                                <td className='rounded-left'>{idx}</td>
-                                <td>{forum.name}</td>
-                                <td className='rounded-right'>{forum.numPosts} posts</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+            <Header title={"forums"} searchPlaceholder={"search forums"}/>
+            <div className='main-container'>
+                <Table borderless className='songs' variant='dark'>
+                    <tbody>
+                        {dummyData.map((forum, idx)=>{
+                            return(
+                                <tr onClick={()=>handleClick(forum.id)}>
+                                    <td className='rounded-left'>{idx}</td>
+                                    <td>{forum.name}</td>
+                                    <td className='rounded-right'>{forum.numPosts} posts</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            </div>
         </>
     )
 }

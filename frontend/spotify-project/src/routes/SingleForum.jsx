@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom'
+import Header from '../components/Header'
 import '../styles/forum.css'
+
 const SingleForum = () => {
     const location = useLocation();
     const id = location.id;
-    //fetch data with the id
 
+    const name = "indie lovers";
     const dummyPosts = [
         {
             subject: "concerts near boston?",
@@ -28,24 +30,26 @@ const SingleForum = () => {
     ];
 
     return(
-        <div className='forum'>
-            <p>Single Forum</p>
-            {dummyPosts.map((post)=>{
-                return (
-                    <div className='post'>
-                        <div className='post-header'>
-                            <div className='user'>{post.user}</div>
-                            <div className='subject'>{post.subject}</div>
+        <>
+            <Header title={name} searchPlaceholder={"search posts"} forForums={true}></Header>
+            <div className='main-container'>
+                {dummyPosts.map((post, idx)=>{
+                    return (
+                        <div key={idx} className='post'>
+                            <div className='post-header'>
+                                <div className='user'>{post.user}</div>
+                                <div className='subject'>{post.subject}</div>
+                            </div>
+                            <br></br>
+                            {post.message}
+                            <br></br>
+                            Likes: {post.likes}
+                            <br></br>
                         </div>
-                        <br></br>
-                        {post.message}
-                        <br></br>
-                        Likes: {post.likes}
-                        <br></br>
-                    </div>
-                )
-            })}
-        </div>
+                    )
+                })}
+            </div>
+        </>
     )
 }
 export default SingleForum;
