@@ -1,8 +1,13 @@
-.songs{
-    margin: 0px 0px 10px 10px;
-    padding:0;
-    border-radius: 4px;
+.tableDiv{
+    max-width: 100%;
+    margin-left:1%;
+    margin-right:1%;
 }
+.songs{
+    border-radius: 4px;
+    width: auto;
+}
+
 .songs img{
     max-width: 50px;
     max-height: 50px;

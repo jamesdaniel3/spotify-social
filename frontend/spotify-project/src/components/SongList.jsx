@@ -24,7 +24,8 @@ const SongList = (props) => {
         },
     ]
   return (
-    <Table borderless className='songs' variant='dark'>
+    <div className='tableDiv'>
+          <Table borderless className='songs' variant='dark'>
       {/*
       maybe delete the header?
       <thead>
@@ -52,6 +53,7 @@ const SongList = (props) => {
         })}
       </tbody>
     </Table>
+    </div>
   );
 }
 

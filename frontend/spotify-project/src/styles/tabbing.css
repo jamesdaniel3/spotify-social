@@ -1,6 +1,7 @@
 .tabbing{
-    margin: 0px 0px 10px 10px;
     border: none !important;
+    margin-left:1%;
+    margin-right:1%;
 }
 .tabbing .nav-link{
     color: white;

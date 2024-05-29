@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/discover.css';
 
+import UserCard from '../components/UserCard';
+import NavBar from '../components/NavBar.jsx';
+
 import SearchBar from '../components/SearchBar';
-import useAuth from "../utils/useAuth.js";
 
 let count = 0
 
-const DiscoverPage = ({code}) => {
-  if (!count){
-    const accessToken = useAuth(code);
-    count += 1
-  }
+const DiscoverPage = () => {
 
+  const userCards = Array.from({ length: 14 }, (_, index) => <UserCard key={index} />);
 
   return(
     <>
@@ -25,14 +24,23 @@ const DiscoverPage = ({code}) => {
             <SearchBar placeholder='Search users' />
           </div>
 
-            <div>
+            <div> </div>
 
-            </div>
+          </div>
 
+        <div className='discover-body'>
+          <div className='discover-subtitle'>recent searches</div>
+
+          <div className='card-container'>
+            {/* on click link to profile  */}
+            { userCards }
+
+          </div>
+          
         </div>
         
       </div>
-      <p>{code}</p>
+      {/* <p>{code}</p> */}
     </>
   )
 }

@@ -1,63 +1,107 @@
-require("dotenv").config()
+require(`dotenv`).config();
+const express = require(`express`);
+const queryString = require(`querystring`);
+const axios = require(`axios`);
+const app = express();
+const port = 8888;
 
-const express= require('express');
-const cors = require("cors")
-const bodyParser = require("body-parser")
-const SpotifyWebApi = require("spotify-web-api-node")
-const app= express();
-app.use(cors())
-app.use(bodyParser.json())
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const redirectURI = process.env.REDIRECT_URI;
+console.log(redirectURI)
 
-const port= 5000;
+const generateRandomString = length => {
+    let text = ``;
+    const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
+
+    for(let i = 0; i < length; i++){
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+}
+
+const stateKey = `spotify_auth_state`
+
+app.get(`/login`, (request, response) => {
+    const state = generateRandomString(16)
+    response.cookie(stateKey, state)
+
+    const scope = [
+        'user-read-private',
+        'user-read-email',
+        'user-top-read',
+    ].join(' ');
+
+    const queryParams = queryString.stringify({
+        client_id: clientId,
+        response_type: `code`,
+        redirect_uri: redirectURI,
+        state: state,
+        scope: scope,
+    })
+    response.redirect(`https://accounts.spotify.com/authorize?${queryParams}`)
+})
+
+app.get(`/callback`, (req, res) => {
+    const code = req.query.code || null;
+
+    axios({
+        method: `post`,
+        url: `https://accounts.spotify.com/api/token`,
+        data: queryString.stringify({
+            grant_type: `authorization_code`,
+            code: code,
+            redirect_uri: redirectURI
+        }),
+        headers: {
+            'content-type': `application/x-www-form-urlencoded`,
+            Authorization: `Basic ${new Buffer.from(`${clientId}:${clientSecret}`).toString(`base64`)}`
+        },
+    }).then(response => {
+        if(response.status === 200){
+            const { access_token, refresh_token, expires_in} = response.data;
+
+            const queryParams = queryString.stringify({
+                access_token,
+                refresh_token,
+                expires_in,
+            })
+
+            res.redirect(`http://localhost:5173/?${queryParams}`)
+
+
+        } else{
+            res.redirect(`/?${queryString.stringify({ error: `invalid_token`})}`)
+        }
+    }).catch(error => {
+        res.send(error)
+    })
+})
+
+app.get(`/refresh_token`, (req, res) => {
+    const { refresh_token } = req.query;
+
+    axios({
+        method: `post`,
+        url: `https://accounts.spotify.com/api/token`,
+        data: queryString.stringify({
+            grant_type: `authorization_code`,
+            refresh_token: refresh_token
+        }),
+        headers: {
+            'content-type': `application/x-www-form-urlencoded`,
+            Authorization: `Basic ${new Buffer.from(`${clientId}:${clientSecret}`).toString(`base64`)}`
+        },
+    })
+        .then(response => {
+            res.send(response.data)
+        })
+        .catch(error => {
+            res.send(error)
+        })
+})
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
-app.post("/refresh", (req, res) => {
-    const refreshToken = req.body.refreshToken
-    const spotifyApi = new SpotifyWebApi({
-        redirectUri: process.env.REDIRECT_URI,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken,
-    })
-
-    spotifyApi
-        .refreshAccessToken()
-        .then(data => {
-            res.json({
-                accessToken: data.body.accessToken,
-                expiresIn: data.body.expiresIn,
-            })
-        })
-        .catch(err => {
-            console.log(err)
-            res.sendStatus(400)
-        })
+    console.log(`Listening on port ${port}`)
 })
-
-app.post("/login", (req, res) => {
-    const code = req.body.code
-    const spotifyApi = new SpotifyWebApi({
-        redirectUri: process.env.REDIRECT_URI,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-    })
-
-    spotifyApi.authorizationCodeGrant(code)
-        .then(data => {
-            console.log(code)
-            res.json({
-                accessToken: data.body.access_token,
-                refreshToken: data.body.refresh_token,
-                expiresIn: data.body.expires_in
-            })
-        })
-        .catch((err) => {
-            //console.log("Error:", err.body.error_description)
-            console.log(err)
-            res.sendStatus(400)
-        })
-})
-

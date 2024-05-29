@@ -4,11 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import {logout} from "../utils/Spotify.js";
 
 const NavBar = () => {
   return (
     <>
-        <Navbar className='navbar-dark' expand={false}>
+        <Navbar className='navbar-dark' expand={false} id='nav'>
           <Container fluid>
             <Navbar.Toggle className = 'toggle-btn' aria-controls={`offcanvasNavbar-expand-${false}`} />
             <Navbar.Offcanvas
@@ -26,8 +27,7 @@ const NavBar = () => {
                     <Nav.Link href="/liked-songs">liked songs</Nav.Link>
                     <Nav.Link href="/top-artists">top artists</Nav.Link>
                     <Nav.Link href="/top-songs">top songs</Nav.Link>
-                    <Nav.Link href="/forums">forums</Nav.Link>
-                    <Nav.Link href="/">log out</Nav.Link>
+                    <Nav.Link onClick={logout}>log out</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
