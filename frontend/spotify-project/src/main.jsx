@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { accessToken, logout, getCurrentUserProfile } from './utils/Spotify';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
@@ -15,22 +16,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
 const App = () => {
-    const [searchParams] = useSearchParams();
-    const code = searchParams.get('code');
-    const navigate = useNavigate();
     const [userCode, setUserCode] = useState("");
+    const [token, setToken] = useState(null);
+    const [profile, setProfile] = useState(null);
 
     useEffect(() => {
-        if (code) {
-            setUserCode(code)
-        }
-    }, [code, navigate]);
+        setToken(accessToken);
+
+        const fetchData = async () => {
+            try {
+                const { data } = await getCurrentUserProfile();
+                setProfile((prevProfile) => {
+                    return data;
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchData();
+    }, []);
+
+    console.log(profile)
 
     return (
         <>
             <NavBar />
             <Routes>
-                <Route path="/" element={userCode ? <DiscoverPage code={userCode} /> : <Login />} />
+                <Route path="/" element={profile ? <DiscoverPage /> : <Login />} />
                 <Route path="/forums" element={<AllForums />} />
                 <Route path="/forums/:id" element={<SingleForum />} />
                 <Route path="/liked-songs" element={<LikedSongs />} />
