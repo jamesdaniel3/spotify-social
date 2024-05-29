@@ -4,6 +4,8 @@ const express = require(`express`);
 const queryString = require(`querystring`);
 const axios = require(`axios`);
 const db = require('./firebase');
+const admin = require('firebase-admin');
+const { FieldValue } = admin.firestore;
 const app = express();
 const port = 8888;
 
@@ -66,6 +68,34 @@ app.get('/api/users/:userId', async (req, res) => {
     } catch (error) {
         console.error('Error fetching user:', error);
         res.status(500).json({ error: 'An error occurred while fetching user' });
+    }
+});
+
+
+app.post('/api/chats/:chatId/messages', async (req, res) => {
+    try {
+        const chatId = req.params.chatId;
+        const { content, sender } = req.body;
+
+        // Create a new message document in the 'messages' collection
+        const messageRef = await db.collection('messages').add({
+            content: content,
+            sender: sender,
+            timestamp: new Date().toISOString(),
+        });
+
+        // Get the ID of the newly created message document
+        const messageId = messageRef.id;
+
+        // Update the 'messages' array in the chat document
+        await db.collection('chats').doc(chatId).update({
+            messages: FieldValue.arrayUnion(messageId),
+        });
+
+        res.status(201).json({ message: 'Message sent successfully' });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
