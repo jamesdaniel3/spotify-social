@@ -1,5 +1,4 @@
-/*figure out how to turn off the focus animation*/
-.toggle-btn {
+/* .toggle-btn {
     transition: none !important;
     -webkit-transition: none !important;
     transition: none;
@@ -10,10 +9,7 @@
     transition: none;
     border: 1px;
 }
-
+*/
 #nav {
-    position: absolute;
-    top: 45px;
-    left: 0;
-    z-index: 500;
+    width: max-content;
 }

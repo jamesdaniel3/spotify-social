@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Tabbing from '../components/Tabbing';
+import Header from '../components/Header';
+
 const TopSongs = ({ topSongsShort, topSongsMedium, topSongsLong }) => {
     console.log(topSongsShort);
     console.log(topSongsMedium);
@@ -8,8 +10,10 @@ const TopSongs = ({ topSongsShort, topSongsMedium, topSongsLong }) => {
     const dummyData = {short: [], medium: [], long: []} // assuming we can access short, medium, long term from one piece of data
     return(
         <>
-            <p>Top Songs</p>
-            <Tabbing short = {dummyData.short} medium = {dummyData.medium} long = {dummyData.long}></Tabbing>
+            <Header title={"top songs"}/>
+            <div className='main-container'>
+                <Tabbing short = {dummyData.short} medium = {dummyData.medium} long = {dummyData.long}></Tabbing>
+            </div>
         </>
     )
 }

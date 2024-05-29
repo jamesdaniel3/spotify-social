@@ -9,8 +9,8 @@ import {logout} from "../utils/Spotify.js";
 const NavBar = () => {
   return (
     <>
-        <Navbar className='navbar-dark' expand={false} id='nav'>
-          <Container fluid>
+        <Navbar className='navbar-dark' style={{padding:0}} expand={false} id='nav'>
+          <Container style={{padding:0}}>
             <Navbar.Toggle className = 'toggle-btn' aria-controls={`offcanvasNavbar-expand-${false}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${false}`}

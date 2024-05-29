@@ -4,6 +4,12 @@ body {
     color: white;
 }
 
+.main-container{
+    max-width: 100%;
+    margin-left:4%;
+    margin-right:4%;
+}
+  
 .d-flex {
     margin-top: 50px;
 }

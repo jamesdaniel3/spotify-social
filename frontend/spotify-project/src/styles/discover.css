@@ -1,82 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-html, body {
-  background-color: #1F1F1F;
-  color: white;
-  font-family: Roboto;
-  height: 100%;
-}
-
-.discover-page {
-  /* margin-left: 150px; */
-  width: 100%;
-  background-color: #1F1F1F;
-  color: white;
-  font-family: Roboto;
-  height: 100vh;
-  z-index: 1;
-  position: absolute;
-}
-
-/* header */
-
-.header {
-  background-color: #191414;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  
-  justify-content: space-between;
-  position: relative;
-  padding-left: 40px;
-}
-
-.discover-title {
-  margin-left: 50px;
-  font-size: 3rem;
-  display: flex;
-}
-
-.left-section {
-  display: flex;
-  align-items: center;
-  width: 200px;
-}
-
-.center-section {
-  margin-left: -200px;
-}
-
-@media (max-width: 1000px) {
-  .center-section {
-      margin-left: 30px;
-  }
-
-}
-
-@media (max-width: 700px) {
-  .header {
-    display: block;
-    padding-left: 55px;
-  }
-
-}
-
 /* body */
 
-.discover-body {
-  margin-left: 50px;
-  margin-top: 25px;
-}
 
 .card-container {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   /* flex-shrink: 1;  */
 }
 
 .discover-subtitle {
-  font-size: 32px;
+  font-size: 1.6rem;
   margin-bottom: 50px;
 }
 
@@ -102,11 +35,9 @@ html, body {
   background-color: #1F1F1F;
   color: white;
   border: none;
-
   display: flex;
-  /* align-items: center; */
   flex-direction: column;
-  width: calc(15% - 20px);
+  width: 20%;
 
   padding-top: 15px;
   padding-left: 20px;
@@ -114,32 +45,25 @@ html, body {
   margin-bottom: 20px;
 }
 
-@media (max-width: 1200px) {
-  #user-card {
-    width: calc(20% - 20px);
-  }
-}
-
+/* the number of cards shown decreases */
 @media (max-width: 1000px) {
   #user-card {
-    width: calc(25% - 20px);
-    /* When screen size reduces, 2 cards per row */
+    width: 25%;
   }
 }
 
 @media (max-width: 800px) {
   #user-card {
-    width: calc(33.33% - 20px);
-    /* When screen size reduces, 2 cards per row */
+    width: 33.33%
   }
 }
 
 @media (max-width: 550px) {
   #user-card {
-    width: calc(50% - 20px);
-    /* When screen size reduces, 2 cards per row */
+    width: 50%
   }
 }
+
 
 #user-card:hover {
   background-color: #292929;
@@ -154,7 +78,6 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding-right: 10px; */
 }
 
 .circle-container {

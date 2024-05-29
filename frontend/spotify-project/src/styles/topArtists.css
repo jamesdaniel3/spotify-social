@@ -19,14 +19,15 @@
   .tab-content {
     background-color: #a9a9a9; /* Normal gray background for tabs and content */
     border: 1px solid transparent; /* Border for better visibility */
-    margin-top: -10.5px;
-    margin-left: 10px;
+    margin-top:-0.5px;
+    margin-left: 15px;
   }
   
   .nav-tabs .nav-link {
     color: black !important; /* Make tab text black */
     background-color: #575757;
-    border-color: #ccc;
+    border-color: transparent;
+    margin-top: 50px; /*  brings everything down  */
   }
   
   .nav-tabs .nav-link.active {
@@ -45,7 +46,7 @@
     border-radius: 12px;
     padding: 16px;
     text-align: center;
-    background-color: #a9a9a9; /* Normal gray background for cards */
+    background-color: #7a7878; /* Normal gray background for cards */
   }
   
   .artist-image {

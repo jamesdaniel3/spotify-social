@@ -5,6 +5,7 @@ import '../styles/discover.css';
 import UserCard from '../components/UserCard';
 import NavBar from '../components/NavBar.jsx';
 import SearchBar from '../components/SearchBar';
+import Header from '../components/Header.jsx';
 
 import ErrorIcon from '../icons/search-error-icon.png'
 
@@ -38,22 +39,10 @@ const DiscoverPage = () => {
 
   return(
     <>
+      <Header title={"discover"} searchPlaceholder={"search users"}/>
+    <div className='main-container'>
       <div className='discover-page'>
-        <div className='header'>
-          <div className='left-section'>
-            <div className='discover-title'>discover</div>
-          </div>
-
-          <div className='center-section'>
-            <SearchBar 
-              placeholder='Search users' 
-              searchTerm={searchTerm} 
-              setSearchTerm={setSearchTerm} 
-            />
-          </div>
-
-          <div></div>
-        </div>
+      
         <div className='discover-body'>
           {searchTerm && (
             <div>
@@ -84,11 +73,10 @@ const DiscoverPage = () => {
           {!searchTerm && (
             <div className='discover-subtitle'>recent searches</div>
           )} 
-</div>
-
-
-        
-      </div>
+          </div>
+          
+        </div>
+        </div>
     </>
   )
 }
