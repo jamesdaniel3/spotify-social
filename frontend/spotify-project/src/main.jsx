@@ -24,6 +24,7 @@ const App = () => {
         topSongsShort,
         topSongsMedium,
         topSongsLong,
+        likedSongs,
     } = grabSpotifyData();
 
 
@@ -34,7 +35,7 @@ const App = () => {
                 <Route path="/" element={profile ? <DiscoverPage /> : <Login />} />
                 <Route path="/forums" element={<AllForums />} />
                 <Route path="/forums/:id" element={<SingleForum />} />
-                <Route path="/liked-songs" element={<LikedSongs />} />
+                <Route path="/liked-songs" element={<LikedSongs likedSongs={likedSongs} />} />
                 <Route path="/top-artists" element={<TopArtists topArtistsShort={topArtistsShort} topArtistsMedium={topArtistsMedium} topArtistsLong={topArtistsLong} />} />
                 <Route path="/top-songs" element={<TopSongs topSongsShort={topSongsShort} topSongsMedium={topSongsMedium} topSongsLong={topSongsLong} />} />
                 <Route path="/messages" element={<Messages />} />
