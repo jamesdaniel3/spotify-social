@@ -1,6 +1,6 @@
 import React from 'react'
 
-import imageUrl from "../icons/logo.png"
+import imageUrl from "../icons/logo-cropped.png"
 import '../styles/discover.css';
 
 import Card from 'react-bootstrap/Card';
@@ -15,7 +15,7 @@ const UserCard = () => {
             </div>
             
             {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-            <Card.Body>
+            <Card.Body id='card-body'>
               <Card.Title>Username</Card.Title>
             </Card.Body>
           </Card>
