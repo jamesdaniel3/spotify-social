@@ -2,27 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import '../styles/song-list.css'
 
-const SongList = (props) => {
-    const dummyData = [
-        {
-            title: "The Adults Are Talking",
-            img: "https://upload.wikimedia.org/wikipedia/en/f/f8/The_Strokes_-_The_New_Abnormal.png",
-            album: "The New Abnormal",
-            artist: "The Strokes"
-        },
-        {
-            title: "Gnaw",
-            img: "https://i.scdn.co/image/ab67616d0000b27352d77e720679ad0b4a95c784",
-            album: "Race",
-            artist: "Alex G"
-        },
-        {
-            title: "Duck Or Ape",
-            img: "https://i.scdn.co/image/ab67616d0000b273d72f734a66c2b545facd7517",
-            album: "I Can't Handle Change",
-            artist: "Roar"
-        },
-    ]
+const SongList = ({data}) => {
   return (
     <div className='tableDiv'>
       <Table borderless className='songs bigger-screens' variant='dark'>
@@ -38,16 +18,24 @@ const SongList = (props) => {
       </thead>
       */}
         <tbody>
-          {dummyData.map((song, idx)=>{
+          {data.map((song, idx)=>{
             return(
               <tr>
-                  <td className='rounded-left'>{idx}</td>
+                  <td className='rounded-left'>{idx+1}</td>
                   <td>
-                    <img src = {song.img}/>
-                      {song.title}
+                    <img src = {song.album.images[0].url}/>
                   </td>
-                  <td>{song.album}</td>
-                  <td className='rounded-right'>{song.artist}</td>
+                  <td>{song.name}</td>
+                  <td>{song.album.name}</td>
+                  <td className='rounded-right'>
+                    {song.artists.map((artist, idx)=>{
+                        if (idx !==song.artists.length-1){
+                          return `${artist.name}, `
+                        } else {
+                          return `${artist.name}`
+                        }
+                    })}
+                  </td>
               </tr>
             )
           })}
@@ -55,15 +43,23 @@ const SongList = (props) => {
       </Table>
       <Table borderless className='songs smaller-screens' variant='dark'>
         <tbody>
-          {dummyData.map((song, idx)=>{
+        {data.map((song, idx)=>{
             return(
               <tr>
                   <td className='rounded-left'>{idx}</td>
                   <td>
-                    <img src = {song.img}/>
-                      {song.title}
+                    <img src = {song.album.images[0].url}/>
                   </td>
-                  <td className='rounded-right'>{song.artist}</td>
+                  <td>{song.name}</td>
+                  <td className='rounded-right'>
+                    {song.artists.map((artist, idx)=>{
+                        if (idx !==song.artists.length-1){
+                          return `${artist.name}, `
+                        } else {
+                          return `${artist.name}`
+                        }
+                    })}
+                  </td>
               </tr>
             )
           })}

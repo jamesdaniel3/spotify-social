@@ -4,7 +4,6 @@ import '../styles/discover.css';
 import UserCard from '../components/UserCard';
 import Header from '../components/Header.jsx';
 
-let count = 0
 
 const DiscoverPage = () => {
 
