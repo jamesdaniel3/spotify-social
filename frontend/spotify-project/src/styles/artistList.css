@@ -1,26 +1,66 @@
-.artist-list {
+/* artistList.css */
+
+.artist-list-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.artist-list-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
-.artist-card {
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  background-color: #1c1c1c;
-}
-
-.artist-image {
+.artist-pic {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  width: 100%;
-  height: auto;
-  border: 2px solid #fff;
+  color: black;
+}
+
+.artist-info {
+  flex-grow: 1;
+  margin-left: 1rem;
+  color: black;
+}
+
+.artist-info p {
+  margin: 0.25rem 0; /* Reduce margin between lines */
+  color: black;
 }
 
 .artist-name {
-  margin-top: 8px;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  margin: 0;
+  color: black;
+}
+
+.artist-card {
+  text-align: center;
+  background-color: #444;
+  padding: 1rem;
+  border-radius: 8px;
+  color: white;
+}
+
+.artist-card .artist-pic {
+  background-color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Container for the list of artists */
+.artist-list {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Align items to the start (left) */
 }
