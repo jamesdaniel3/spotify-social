@@ -49,7 +49,7 @@ const App = () => {
                 <Route path="/top-artists" element={<TopArtists />} />
                 <Route path="/top-songs" element={<TopSongs />} />
                 <Route path="/messages" element={<Messages />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile profileInfo={profile} />} />
             </Routes>
         </>
     );
