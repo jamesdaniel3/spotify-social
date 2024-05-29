@@ -87,6 +87,17 @@ html, body {
   padding-left: 0;
 }
 
+#card-text {
+  color: grey;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+#card-title {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
 #user-card {
   background-color: #1F1F1F;
   color: white;
@@ -151,6 +162,7 @@ html, body {
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
+  box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.5);
 }
 
 .profile-image {
@@ -160,6 +172,6 @@ html, body {
 }
 
 #user-card:hover .circle-container {
-  box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.75);
     /* Add box shadow */
 }
