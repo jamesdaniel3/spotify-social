@@ -64,7 +64,6 @@ const Messages = ({ profileInfo }) => {
                     {displayNames.map(({ chatId, participants }, index) => (
                         <li key={index}>
                             <p>Participants: {participants.join(', ')}</p>
-                            {/* Add more chat details here */}
                         </li>
                     ))}
                 </ul>
@@ -76,3 +75,4 @@ const Messages = ({ profileInfo }) => {
 };
 
 export default Messages;
+
