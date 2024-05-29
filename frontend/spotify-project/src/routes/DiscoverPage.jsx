@@ -39,7 +39,7 @@ const DiscoverPage = () => {
 
   return(
     <>
-      <Header title={"discover"} searchPlaceholder={"search users"}/>
+      <Header title={"discover"} searchPlaceholder={"search users"} searchTerm={searchTerm}  setSearchTerm={setSearchTerm}/>
     <div className='main-container'>
       <div className='discover-page'>
       
