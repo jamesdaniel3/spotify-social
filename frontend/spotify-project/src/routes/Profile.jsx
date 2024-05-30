@@ -4,8 +4,11 @@ import ArtistList from '../components/ArtistList';
 import SongList from "../components/SongList.jsx";
 import axios from "axios";
 import Header from "../components/Header.jsx";
-import settingsIcon from '../assets/settings.png'; // Import the image
-import SettingsModal from '../components/SettingsModal'; // Import the modal component
+import settingsIcon from '../icons/settings.png';
+import SettingsModal from '../components/SettingsModal';
+
+import locked from '../icons/locked.png';
+import unlocked from '../icons/unlocked.png';
 
 const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
   const [firebaseInfo, setFirebaseInfo] = useState({});
@@ -28,26 +31,33 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
     setShowModal(false); // Hide the modal
   };
 
+  const fetchUserData = async () => {
+    const id = profileInfo.id;
+
+    try {
+      const result = await axios.get(`http://localhost:8888/user/${id}`);
+      setFirebaseInfo(result.data);
+    } catch (error) {
+      console.error("Error checking for user:", error);
+    }
+  };
+
   useEffect(() => {
-    const checkForUser = async () => {
-      const id = profileInfo.id;
-
-      try {
-        const result = await axios.get(`http://localhost:8888/user/${id}`);
-        setFirebaseInfo(result.data);
-      } catch (error) {
-        console.error("Error checking for user:", error);
-      }
-    };
-
     if (profileInfo) {
-      checkForUser();
+      fetchUserData();
 
       if (profileInfo.images.length === 0) {
         profileInfo.images.push("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png");
       }
     }
   }, [profileInfo]);
+
+  useEffect(() => {
+    // Re-fetch user data when modal is closed to ensure updated data is reflected
+    if (!showModal) {
+      fetchUserData();
+    }
+  }, [showModal]);
 
   console.log('Profile data:', profileInfo);
   console.log('Firebase data:', firebaseInfo);
@@ -78,19 +88,27 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
                   style={{ zIndex: 1000, height: "20px", width: "20px" }}
                   onClick={handleSettingsClick}
               />
+              <img
+                  src={firebaseInfo.private_page ? locked : unlocked}
+                  alt={firebaseInfo.private_page ? "locked" : "unlocked"}
+                  className="privacy-icon"
+                  style={{ zIndex: 1000, height: "20px", width: "20px", marginLeft: "10px" }}
+              />
             </h2>
             <p style={{ color: "white" }}>{profileInfo.followers.total} followers</p>
           </div>
 
-          <div className="profile-content">
-            <h2 style={{ justifyContent: "center" }}>Current Favorites</h2>
-            <div className="top-artists">
-              {topArtistsShort.items && <ArtistList data={topArtistsShort.items} />}
-            </div>
-            <div className="top-songs">
-              {topSongsShort.items && <SongList data={topSongsShort.items} />}
-            </div>
-          </div>
+          {firebaseInfo.display_info && (
+              <div className="profile-content">
+                <h2 style={{ justifyContent: "center" }}>Current Favorites</h2>
+                <div className="top-artists">
+                  {topArtistsShort.items && <ArtistList data={topArtistsShort.items} />}
+                </div>
+                <div className="top-songs">
+                  {topSongsShort.items && <SongList data={topSongsShort.items} />}
+                </div>
+              </div>
+          )}
         </div>
 
         {/* Include the modal component and pass the required props */}
