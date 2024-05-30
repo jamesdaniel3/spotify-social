@@ -20,7 +20,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
   }
 
   const handleSettingsClick = () => {
-    setShowModal(true); // Show the modal when the image is clicked
+    setShowModal(true);
   };
 
   const handleProfileClick = (url) => {
@@ -28,7 +28,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Hide the modal
+    setShowModal(false);
   };
 
   const fetchUserData = async () => {
@@ -53,7 +53,6 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
   }, [profileInfo]);
 
   useEffect(() => {
-    // Re-fetch user data when modal is closed to ensure updated data is reflected
     if (!showModal) {
       fetchUserData();
     }
@@ -111,7 +110,6 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
           )}
         </div>
 
-        {/* Include the modal component and pass the required props */}
         <SettingsModal
             show={showModal}
             handleClose={handleCloseModal}

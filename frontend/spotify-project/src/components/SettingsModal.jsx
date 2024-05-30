@@ -14,7 +14,6 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                 displayInfo: displayInfoChecked,
                 privatePage: privatePageChecked
             });
-            console.log('User settings updated successfully');
             handleClose();
         } catch (error) {
             console.error('Error updating user settings:', error);
@@ -31,7 +30,7 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                     <Form.Group controlId="formDisplayInfo">
                         <Form.Check
                             type="checkbox"
-                            label="Display Info"
+                            label="Display Current Favorites"
                             checked={displayInfoChecked}
                             onChange={(e) => setDisplayInfoChecked(e.target.checked)}
                             className="custom-checkbox"
@@ -40,7 +39,7 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                     <Form.Group controlId="formPrivatePage">
                         <Form.Check
                             type="checkbox"
-                            label="Private Page"
+                            label="Make Page Private"
                             checked={privatePageChecked}
                             onChange={(e) => setPrivatePageChecked(e.target.checked)}
                             className="custom-checkbox"
