@@ -14,6 +14,9 @@ const DiscoverPage = ({ profileInfo }) => {
   const [loading, setLoading] = useState(true);
   const [userMap, setUserMap] = useState({}); // Initialize userMap state
 
+
+  // console.log(profileInfo)
+
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8888/posts");
@@ -27,12 +30,21 @@ const DiscoverPage = ({ profileInfo }) => {
     const id = profileInfo.id;
     const display_name = profileInfo.display_name;
     const followers = profileInfo.followers.total;
+    let profilePicture = '';
+    
+    if (profileInfo.images.length === 0) {
+      profilePicture = `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png`;
+    } else {
+      profilePicture = profileInfo.images[0];
+    }
+    
     try {
       if (id && display_name && followers) {
         const body = {
           id: id,
           display_name: display_name,
           followers: followers,
+          profilePicture: profilePicture
         };
         await axios.post(`http://localhost:8888/user`, body);
       }
@@ -46,14 +58,14 @@ const DiscoverPage = ({ profileInfo }) => {
 
     try {
       const result = await axios.get(`http://localhost:8888/user/${id}`);
-      console.log(result);
+      // console.log(result);
       setCurrentUserData(result.data);
 
       if (result.data.length === 0) {
-        console.log("doesn't exist");
+        // console.log("doesn't exist");
         createProfile();
       } else {
-        console.log("exists");
+        // console.log("exists");
         fetchRecentlySeenUsers(result.data.recently_seen);
       }
     } catch (error) {
@@ -87,6 +99,7 @@ const DiscoverPage = ({ profileInfo }) => {
     checkForUser();
   }, []);
 
+
   const filteredData = allData.filter((val) => {
     // console.log(allData)
     if (searchTerm === "") {
@@ -110,7 +123,8 @@ const DiscoverPage = ({ profileInfo }) => {
                     <div className='discover-subtitle'>top users</div>
                     <div className='card-container'>
                       {filteredData.map((val) => (
-                        <UserCard key={val.id} username={val.display_name} userId={val.id} currentUserId={profileInfo.id} />
+                        <UserCard key={val.id} username={val.display_name} userId={val.id} currentUserId={profileInfo.id}
+                          profilePicture={val.profilePicture} />
                       ))}
                       {/*{filteredData
                         .filter(val => val.id !== profileInfo.id) // Filter out the current user's profile
@@ -143,7 +157,8 @@ const DiscoverPage = ({ profileInfo }) => {
                     recentlySeenUsers.length > 0 ? (
                         <div className='card-container'>  
                           {recentlySeenUsers.map((userId, index) => (
-                            <UserCard key={index} username={userMap[userId].display_name} userId={userId} currentUserId={profileInfo.id} />
+                            <UserCard key={index} username={userMap[userId].display_name} userId={userId} currentUserId={profileInfo.id}
+                              profilePicture={userMap[userId].profilePicture} />
                           ))}
                         </div>
                       ) : (

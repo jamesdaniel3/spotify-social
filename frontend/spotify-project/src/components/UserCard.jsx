@@ -5,7 +5,7 @@ import '../styles/discover.css';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 
-const UserCard = ({ username, userId, currentUserId }) => {
+const UserCard = ({ username, userId, currentUserId, profilePicture }) => {
   const handleAddToRecent = async (e) => {
     e.preventDefault();
     console.log(username, userId, currentUserId);
@@ -26,10 +26,10 @@ const UserCard = ({ username, userId, currentUserId }) => {
   return (
     <Card id='user-card'>
       <div onClick={handleAddToRecent}>
-        <Link to={`/profile`} className='profile-link'>
+        <Link to={`/profile/${userId}`} className='profile-link'>
           <div className='top-container'>
             <div className="circle-container">
-              <img src={imageUrl} alt="User Profile" className="profile-image" />
+              <img src={profilePicture} alt="User Profile" className="profile-image" />
             </div>
           </div>
           <Card.Body id='card-body'>

@@ -182,9 +182,10 @@ app.get("/user/:id", async (req, res) => {
 
 app.post('/user', async (req, res) => {
     try {
-        const { id, display_name, followers } = req.body;
+        const { id, display_name, followers, profilePicture } = req.body;
 
         // console.log('Received POST request with body:', req.body);
+        // console.log(profilePicture);
 
         // Create a new document in the 'users' collection with a specific ID
         const docRef = db.collection('users').doc(id);
@@ -192,8 +193,10 @@ app.post('/user', async (req, res) => {
             artists_displayed: [],
             display_name: display_name,
             followers: followers,
+            profilePicture: profilePicture,
             open_for_messages: true,
             private_page: true,
+            display_info: true,
             recently_seen: [],
             songs_displayed: []
         });
