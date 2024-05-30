@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/profile.css';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import ArtistList from '../components/ArtistList';
+import SongList from "../components/SongList.jsx";
 import axios from "axios";
 
-const Profile = ({ profileInfo }) => {
+const Profile = ({ profileInfo, topArtistsShort, topSongsShort}) => {
   const [firebaseInfo, setFirebaseInfo] = useState({});
+
+  if(topArtistsShort.items && topSongsShort.items){
+    topArtistsShort.items = topArtistsShort.items.slice(0, 5);
+    topSongsShort.items = topSongsShort.items.slice(0, 5);
+  }
 
   const handleImageClick = (url) => {
     window.open(url, '_blank');
@@ -62,11 +65,12 @@ const Profile = ({ profileInfo }) => {
         </div>
 
         <div className="profile-content">
+          <h2 style={{justifyContent: "center"}}>Current Favorites</h2>
           <div className="top-artists">
-
+            {topArtistsShort.items && <ArtistList data={topArtistsShort.items} />}
           </div>
           <div className="top-songs">
-
+            {topSongsShort.items && <SongList data={topSongsShort.items} />}
           </div>
         </div>
 
