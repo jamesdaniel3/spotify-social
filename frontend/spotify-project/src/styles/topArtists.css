@@ -2,7 +2,6 @@
     background-color: #2c2c2c; /* Dark gray background */
     min-height: 100vh; /* Ensure it covers the full height of the viewport */
     padding: 20px; /* Optional: Add some padding */
-    color: #fff; /* White text color */
   }
   
   .page-title {
@@ -10,27 +9,21 @@
     margin-bottom: 20px;
   }
   
-  .nav-tabs {
-    background-color: transparent; /* Normal gray background for tabs and content */
-    border: 1px solid transparent; /* Border for better visibility */
-    border-radius: 8px; /* Rounded corners */
-  }
-  
-  .tab-content {
+
+  .top-artists-page .tab-content {
     background-color: #a9a9a9; /* Normal gray background for tabs and content */
     border: 1px solid transparent; /* Border for better visibility */
-    margin-top:-0.5px;
-    margin-left: 15px;
+    margin-top: -0.5px;
   }
   
-  .nav-tabs .nav-link {
+  .top-artists-page .nav-tabs .nav-link {
     color: black !important; /* Make tab text black */
     background-color: #575757;
-    border-color: transparent;
+    border-color: #ccc;
     margin-top: 50px; /*  brings everything down  */
   }
   
-  .nav-tabs .nav-link.active {
+  .top-artists-page .nav-tabs .nav-link.active {
     background-color: #a9a9a9 !important; /* Gray background for active tab */
     border-color: #ccc !important; /* Adjust the border color for the active tab */
     color: black !important; /* Make active tab text black */

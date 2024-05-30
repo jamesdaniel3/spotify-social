@@ -9,19 +9,16 @@
     margin-right: 10px;
 }
 .songs tr{
-    --bs-table-bg: transparent;
+    --bs-table-bg: #424242;
+}
+.songs tbody, tableDiv{
+    border-radius: 4px;
 }
 .songs tbody tr:hover td, .songs tbody tr:hover th {
-    background-color: #424242 ;
+    background-color: transparent ;
   }
 .songs td{
     align-content: center;
-}
-.rounded-left{
-    border-radius: 4px 0 0 4px;
-}
-.rounded-right{
-    border-radius: 0 4px 4px 0;
 }
 
 .smaller-screens{
