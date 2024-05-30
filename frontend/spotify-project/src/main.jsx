@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import grabSpotifyData from "./utils/GrabSpotifyData.js";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -16,6 +16,8 @@ import Chat from "./routes/Chat.jsx";
 import SearchedUser from "./routes/SearchedUser"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
+import axios from "axios";
+import { truncateAndFilterTopArtists, truncateAndFilterTopSongs } from './utils/DataTruncation';
 
 const App = () => {
     const {
@@ -28,6 +30,29 @@ const App = () => {
         topSongsLong,
         likedSongs,
     } = grabSpotifyData();
+
+
+    useEffect(() => {
+        const updateUserTopData = async () => {
+            if (profile && topArtistsShort.items && topSongsShort.items) {
+                const truncatedTopArtists = truncateAndFilterTopArtists(topArtistsShort.items);
+                const truncatedTopSongs = truncateAndFilterTopSongs(topSongsShort.items);
+
+                try {
+                    await axios.post('http://localhost:8888/api/updateUserTopData', {
+                        userId: profile.id,
+                        topArtists: truncatedTopArtists,
+                        topSongs: truncatedTopSongs
+                    });
+                    console.log('User top data updated successfully');
+                } catch (error) {
+                    console.error('Error updating user top data:', error);
+                }
+            }
+        };
+
+        updateUserTopData();
+    }, [profile, topArtistsShort, topSongsShort]);
 
 
     return (
