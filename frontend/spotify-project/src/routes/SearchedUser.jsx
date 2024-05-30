@@ -28,6 +28,7 @@ export default function SearchedUser() {
     }, [id]);
 
     console.log(firebaseInfo)
+    console.log(firebaseInfo.recent_top_artists)
 
     // put in an on click to navigate to spotify profile, requires adding field to cloudbase
     return(
@@ -48,6 +49,18 @@ export default function SearchedUser() {
                         </h2>
                         <p style={{ color: "white" }}>{firebaseInfo.followers} followers</p>
                     </div>
+
+                    {firebaseInfo.display_info && (
+                        <div className="profile-content">
+                            <h2 style={{ justifyContent: "center" }}>Current Favorites</h2>
+                            <div className="top-artists">
+                                {firebaseInfo.recent_top_artists && <ArtistList data={firebaseInfo.recent_top_artists } />}
+                            </div>
+                            <div className="top-songs">
+                                {firebaseInfo.recent_top_songs && <SongList data={firebaseInfo.recent_top_songs} />}
+                            </div>
+                        </div>
+                    )}
 
                 </div>
             </>
