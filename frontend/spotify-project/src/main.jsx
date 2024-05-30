@@ -13,6 +13,7 @@ import Profile from './routes/Profile.jsx';
 import Messages from './routes/Messages.jsx';
 import Login from './routes/Login.jsx';
 import Chat from "./routes/Chat.jsx";
+import SearchedUser from "./routes/SearchedUser"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
@@ -41,6 +42,7 @@ const App = () => {
                 <Route path="/messages" element={<Messages profileInfo={profile} />} />
                 <Route path="/profile" element={<Profile profileInfo={profile} topArtistsShort={topArtistsShort} topSongsShort={topSongsShort}/>} />
                 <Route path="/chats/:id" element={<Chat profileInfo={profile}/>} />
+                <Route path="/profile/:id" element={<SearchedUser />} />
             </Routes>
         </>
     );

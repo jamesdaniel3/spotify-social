@@ -104,7 +104,7 @@ const DiscoverPage = ({ profileInfo }) => {
     // console.log(allData)
     if (searchTerm === "") {
       return val;
-    } else if (val.display_name && val.display_name.toLowerCase().includes(searchTerm.toLowerCase()) && !val.private_page) {
+    } else if (val.display_name.toLowerCase() && val.display_name.toLowerCase().includes(searchTerm.toLowerCase()) && !val.private_page) {
       return val;
     }
     return null;
