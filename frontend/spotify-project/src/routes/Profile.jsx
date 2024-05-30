@@ -3,6 +3,7 @@ import '../styles/profile.css';
 import ArtistList from '../components/ArtistList';
 import SongList from "../components/SongList.jsx";
 import axios from "axios";
+import Header from "../components/Header.jsx";
 
 const Profile = ({ profileInfo, topArtistsShort, topSongsShort}) => {
   const [firebaseInfo, setFirebaseInfo] = useState({});
@@ -49,6 +50,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort}) => {
 
   return (
       <>
+        <Header title={"your profile"}/>
         <div className="profile-container">
           <div className={"profile-header"}>
             <img
