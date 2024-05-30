@@ -36,6 +36,25 @@ app.post('/api/updateUserSettings', async (req, res) => {
     }
 });
 
+app.post('/api/updateUserTopData', async (req, res) => {
+    try {
+        const { userId, topArtists, topSongs } = req.body;
+
+        // Ensure the values are not undefined
+        const updateData = {};
+        if (topArtists !== undefined) updateData.recent_top_artists = topArtists;
+        if (topSongs !== undefined) updateData.recent_top_songs = topSongs;
+
+        // Update the user document in Firestore
+        await db.collection('users').doc(userId).update(updateData);
+
+        res.status(200).send('User top data updated successfully');
+    } catch (error) {
+        console.error('Error updating user top data:', error);
+        res.status(500).json({ error: 'An error occurred while updating user top data' });
+    }
+});
+
 
 app.post('/api/chats', async (req, res) => {
     try {
