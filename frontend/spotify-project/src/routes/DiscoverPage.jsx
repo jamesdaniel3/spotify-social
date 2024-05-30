@@ -4,6 +4,7 @@ import '../styles/discover.css';
 import UserCard from '../components/UserCard';
 import Header from '../components/Header.jsx';
 import ErrorIcon from '../icons/search-error-icon.png';
+import LoadingIcon from '../icons/loading-icon.png';
 
 const DiscoverPage = ({ profileInfo }) => { 
   const [searchTerm, setSearchTerm] = useState("");
@@ -124,20 +125,26 @@ const DiscoverPage = ({ profileInfo }) => {
             {!searchTerm && (
               <div>
                 <div className='discover-subtitle'>recent searches</div>
-                <div className='card-container'>
+                
                   {loading ? (
-                    <p>Loading...</p>
+                    <div className='loading-container'>
+                      <img src={LoadingIcon} alt='Loading Icon'/>
+                      <p>Loading...</p>
+                    </div>
+                    
                   ) : (
                     recentlySeenUsers.length > 0 ? (
-                      recentlySeenUsers.map((user, index) => (
-                        <UserCard key={index} username={user.display_name} userId={user.id} currentUserId={profileInfo.id} />
-                      ))
+                        <div className='card-container'>  
+                          {recentlySeenUsers.map((user, index) => (
+                          <UserCard key={index} username={user.display_name} userId={user.id} currentUserId={profileInfo.id} />
+                        ))}
+                      </div>
                     ) : (
                       <p>No recent searches.</p>
                     )
                   )}
                 </div>
-              </div>
+              
             )}
           </div>
         </div>

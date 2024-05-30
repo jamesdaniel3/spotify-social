@@ -122,3 +122,19 @@
 .error-image {
   height: 300px;
 }
+
+/* loading */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  /* Set height to viewport height */
+  font-size: 2.5rem;
+}
+
+.loading-container img {
+  height: 450px;
+}
