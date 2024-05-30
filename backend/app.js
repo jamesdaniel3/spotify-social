@@ -13,9 +13,26 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
 
-
 app.use(cors());
 app.use(express.json());
+
+
+app.post('/api/updateUserSettings', async (req, res) => {
+    try {
+        const { userId, displayInfo, privatePage } = req.body;
+
+        // Update the user document in Firestore
+        await db.collection('users').doc(userId).update({
+            display_info: displayInfo,
+            private_page: privatePage
+        });
+
+        res.status(200).send('User settings updated successfully');
+    } catch (error) {
+        console.error('Error updating user settings:', error);
+        res.status(500).json({ error: 'An error occurred while updating user settings' });
+    }
+});
 
 
 app.post('/api/chats', async (req, res) => {
@@ -138,7 +155,7 @@ app.get('/api/chats/:chatId/messages', async (req, res) => {
 });
 
 
-//DISCOVEER PAGE START
+//DISCOVER PAGE START
 
 // get all users
 app.get("/posts", async (req, res) => {
