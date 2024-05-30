@@ -5,22 +5,22 @@ import '../styles/discover.css';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 
-const UserCard = ({ username, userId }) => {
+const UserCard = ({ username, userId, currentUserId }) => {
   const handleAddToRecent = async (e) => {
     e.preventDefault();
-    console.log(username, userId);
-    if (username) {
-      const body = {
-        recently_seen: username, // Correctly send username in the body
-      };
-      try {
-        await axios.put(`http://localhost:8888/posts/${userId}`, body); // Ensure `userId` matches the backend parameter
-        // Assuming fetchData is declared elsewhere and re-fetches the user data.
-        // fetchData();
-      } catch (error) {
-        console.error("Error updating recently seen:", error);
-      }
-    }
+    console.log(username, userId, currentUserId);
+    try {
+      if (username) {
+        const body = {
+          clickedUserId: userId,
+        }
+        await axios.put(`http://localhost:8888/posts/${currentUserId}`, body); 
+      }; 
+          // Assuming fetchData is declared elsewhere and re-fetches the user data.
+          // fetchData();
+        } catch (error) {
+          console.error("Error updating recently seen:", error);
+        }
   };
 
   return (
