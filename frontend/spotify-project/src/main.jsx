@@ -39,7 +39,7 @@ const App = () => {
                 <Route path="/top-artists" element={<TopArtists topArtistsShort={topArtistsShort} topArtistsMedium={topArtistsMedium} topArtistsLong={topArtistsLong} />} />
                 <Route path="/top-songs" element={<TopSongs topSongsShort={topSongsShort} topSongsMedium={topSongsMedium} topSongsLong={topSongsLong} />} />
                 <Route path="/messages" element={<Messages profileInfo={profile} />} />
-                <Route path="/profile" element={<Profile profileInfo={profile} />} />
+                <Route path="/profile" element={<Profile profileInfo={profile} topArtistsShort={topArtistsShort} topSongsShort={topSongsShort}/>} />
                 <Route path="/chats/:id" element={<Chat profileInfo={profile}/>} />
             </Routes>
         </>
