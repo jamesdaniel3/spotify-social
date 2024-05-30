@@ -24,7 +24,8 @@ const Header = ({ title, searchPlaceholder, forForums, searchTerm, setSearchTerm
                   <NavBar></NavBar>
                   <div className='page-title' style={{marginBottom:0}}><p>{title}</p></div>
                 </div>
-                {searchPlaceholder && <SearchBar placeholder={searchPlaceholder} searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />}
+                {searchPlaceholder && <SearchBar placeholder={searchPlaceholder} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
+                
             </div>
         )
     }

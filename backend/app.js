@@ -10,7 +10,10 @@ const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
 console.log(redirectURI)
 
+app.use(express.json());
 const db = require("./firebase");
+const { collection, getDoc, getDocs, updateDoc, doc, setDoc, arrayUnion, addDoc} = require("firebase/firestore");
+
 
 const cors = require("cors");
 app.use(cors());
@@ -44,6 +47,74 @@ app.get("/posts", async (req, res) => {
         res.status(400).json({ error: e.message });
     }
 });
+
+
+// get specific users
+app.get("/user/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // Query the 'users' collection for the document with the given ID
+        const userDoc = await db.collection('users').doc(id).get();
+
+        if (!userDoc.exists) {
+            return res.status(200).json([]); // If the document doesn't exist, return an empty array
+        } else {
+            const userData = userDoc.data(); // Retrieve the document data
+            res.status(200).json(userData); // Respond with the user data
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error); // Log the error for debugging
+        res.status(500).json({ error: 'An error occurred while fetching user' });
+    }
+});
+
+
+
+app.post('/user', async (req, res) => {
+    try {
+        const { id, display_name, followers } = req.body;
+
+        console.log('Received POST request with body:', req.body);
+
+        // Create a new document in the 'users' collection with a specific ID
+        const docRef = db.collection('users').doc(id);
+        await docRef.set({
+            artists_displayed: [],
+            display_name: display_name,
+            followers: followers,
+            open_for_messages: true,
+            private_page: true,
+            recently_seen: [],
+            songs_displayed: []
+        });
+
+        res.status(201).json({ message: 'User created successfully', id: docRef.id });
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+// // change recently_seen  
+// app.put("/posts/:id", async (req, res) => {
+//     try {
+//         const id = req.params.id;
+//         const username = req.body.recently_seen;
+
+//         console.log(`Updating user ${id} with recently seen: ${username}`);
+        
+//         await updateDoc(doc(db, "users", id), {
+//             recently_seen: arrayUnion(username)
+//         });
+        
+//         res.status(200).json({ message: "success" });
+//     } catch (e) {
+//         console.error(`Error updating recently seen for user ${id}:`, e);
+//         res.status(400).json({ error: e.message });
+//     }
+// });
 
 
 app.get(`/login`, (request, response) => {

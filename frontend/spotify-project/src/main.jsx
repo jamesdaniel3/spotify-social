@@ -31,7 +31,7 @@ const App = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={profile ? <DiscoverPage /> : <Login />} />
+                <Route path="/" element={profile ? <DiscoverPage profileInfo={profile} /> : <Login />} />
                 <Route path="/forums" element={<AllForums />} />
                 <Route path="/forums/:id" element={<SingleForum />} />
                 <Route path="/liked-songs" element={<LikedSongs likedSongs={likedSongs} />} />

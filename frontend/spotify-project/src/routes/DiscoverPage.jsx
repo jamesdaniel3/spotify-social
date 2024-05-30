@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios, { all } from "axios";
-
+import axios from "axios";
 import '../styles/discover.css';
 import UserCard from '../components/UserCard';
-import NavBar from '../components/NavBar.jsx';
-import SearchBar from '../components/SearchBar';
 import Header from '../components/Header.jsx';
+import ErrorIcon from '../icons/search-error-icon.png';
 
-import ErrorIcon from '../icons/search-error-icon.png'
-
-const DiscoverPage = () => { 
+const DiscoverPage = ({ profileInfo }) => { 
   const [searchTerm, setSearchTerm] = useState("");
-  const [allData, setAllData] = useState([]); //array of user data 
+  const [allData, setAllData] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -22,11 +18,49 @@ const DiscoverPage = () => {
     }
   };
 
+  const createProfile = async () => {
+    console.log(profileInfo.id);
+    console.log(profileInfo.display_name);
+    console.log(profileInfo.followers.total);
+    const id = profileInfo.id;
+    const display_name = profileInfo.display_name;
+    const followers = profileInfo.followers.total;
+    try {
+      if (id && display_name && followers) {
+        const body = {
+          id: id,
+          display_name: display_name,
+          followers: followers,
+        };
+        await axios.post(`http://localhost:8888/user`, body);
+      }
+    } catch (error) {
+      console.error("Error creating profile:", error);
+    }
+  };
+
+  const checkForUser = async () => {
+    const id = profileInfo.id;
+
+    try {
+      const result = await axios.get(`http://localhost:8888/user/${id}`);
+      console.log(result);
+
+      if (result.data.length === 0) {
+        console.log("doesn't exist");
+        createProfile();
+      } else {
+        console.log("exists");
+      }
+    } catch (error) {
+      console.error("Error checking for user:", error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
-    // console.log(allData);
+    checkForUser();
   }, []);
-
 
   const filteredData = allData.filter((val) => {
     if (searchTerm === "") {
@@ -37,48 +71,41 @@ const DiscoverPage = () => {
     return null;
   });
 
-  return(
+  return (
     <>
-      <Header title={"discover"} searchPlaceholder={"search users"} searchTerm={searchTerm}  setSearchTerm={setSearchTerm}/>
-    <div className='main-container'>
-      <div className='discover-page'>
-      
-        <div className='discover-body'>
-          {searchTerm && (
-            <div>
-              {filteredData.length > 0 ? (
-                <div>
-                  <div className='discover-subtitle'>top users</div>
-                  <div className='card-container'>
+      <Header title={"discover"} searchPlaceholder={"search users"} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+      <div className='main-container'>
+        <div className='discover-page'>
+          <div className='discover-body'>
+            {searchTerm && (
+              <div>
+                {filteredData.length > 0 ? (
+                  <div>
+                    <div className='discover-subtitle'>top users</div>
+                    <div className='card-container'>
+                      {filteredData.map((val) => (
+                        <UserCard username={val.display_name} key={val.id} userId={val.id} />
+                      ))}
+                    </div>
                   </div>
-                  
-                  {filteredData.map((val, key) => (
-            
-                    <UserCard username={val.display_name} key={key} />
-                    
-                  ))}
-                </div>
-              ) : (
+                ) : (
                   <div className='error-container'>
                     <div className='error-container-inner'>
                       <img src={ErrorIcon} alt="Error Icon" className="error-image" />
                       <div className='no-results'>No users found with name: {searchTerm}</div>
+                    </div>
                   </div>
-                  </div>
-              )}
-            </div>
-
-          )}  
-
-          {!searchTerm && (
-            <div className='discover-subtitle'>recent searches</div>
-          )} 
+                )}
+              </div>
+            )}
+            {!searchTerm && (
+              <div className='discover-subtitle'>recent searches</div>
+            )}
           </div>
-          
         </div>
-        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default DiscoverPage;
