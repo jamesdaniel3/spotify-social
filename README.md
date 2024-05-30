@@ -2,8 +2,8 @@
 
 ## Table of contents 
 - [Overview](#overview)
-- [Setup Instructions](#overview)
-- [Data Models](#data models)
+- [Setup Instructions](#setup-instructions)
+- [Data Models](#data-models)
 - [Credits](#credits)
 
 
