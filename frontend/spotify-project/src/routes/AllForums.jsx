@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react'
+import axios from "axios";
 import SearchBar from '../components/SearchBar'
 import Table from 'react-bootstrap/Table';
 import '../styles/song-list.css'
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
-
+import ForumPostModal from '../components/ForumPostModal';
 
 const AllForums = () => {
+    const [allData, setAllData] = useState([]);
     // order data by number of posts in a forum
     const navigate = useNavigate();
     const dummyData = [
@@ -60,6 +62,20 @@ const AllForums = () => {
         "location.href=`/forums/${id}`"
         navigate(`/forums/${id}`, {id:id});
     }
+    useEffect(() => {
+        fetchData();
+      }, []);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get("http://localhost:8888/forums");
+            setAllData(response.data);
+        } catch (error) {
+            console.error("Error fetching data", error);
+        }
+    };
+
+    console.log(allData);
+    
     return(
         <>
             <Header title={"forums"} searchPlaceholder={"search forums"}/>

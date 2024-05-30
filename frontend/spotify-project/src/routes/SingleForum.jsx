@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from '../components/Header'
+import ForumPostModal from '../components/ForumPostModal'
 import '../styles/forum.css'
 
 const SingleForum = () => {
@@ -33,6 +34,7 @@ const SingleForum = () => {
         <>
             <Header title={name} searchPlaceholder={"search posts"} forForums={true}></Header>
             <div className='main-container'>
+                <ForumPostModal></ForumPostModal>
                 {dummyPosts.map((post, idx)=>{
                     return (
                         <div key={idx} className='post'>
