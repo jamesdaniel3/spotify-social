@@ -17,6 +17,7 @@ const redirectURI = process.env.REDIRECT_URI;
 app.use(cors());
 app.use(express.json());
 
+
 app.post('/api/chats', async (req, res) => {
     try {
         const { userId } = req.body;
@@ -136,14 +137,6 @@ app.get('/api/chats/:chatId/messages', async (req, res) => {
     }
 });
 
-
-app.use(express.json());
-const db = require("./firebase");
-const { collection, getDoc, getDocs, updateDoc, doc, setDoc, arrayUnion, addDoc} = require("firebase/firestore");
-
-
-const cors = require("cors");
-app.use(cors());
 
 const generateRandomString = length => {
     let text = ``;
