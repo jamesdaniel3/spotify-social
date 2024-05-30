@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import searchIconFocus from '../icons/search-icon-focus.png';
 import searchIcon from '../icons/search-icon.png';
 import '../styles/search.css';
 
-
-
-const SearchBar = ({placeholder, handleSearch}) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = ({ placeholder, searchTerm, setSearchTerm }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       console.log("entered");
-      //some handle search functionality - handleSearch(searchTerm);
-      //if they enter then itll call ur handle function 
     }
   };
 
@@ -21,7 +16,6 @@ const SearchBar = ({placeholder, handleSearch}) => {
     <div className='search-container'>
       <button className='search-icon-container'>
         <img src={isFocused ? searchIconFocus : searchIcon} className='search-icon' alt='Search Icon'/>
-        {/* onClick={handleSearch(searchTerm)} */}
         <div className='icon-tooltip'>Search</div>
       </button>
 
@@ -40,4 +34,4 @@ const SearchBar = ({placeholder, handleSearch}) => {
   )
 }
 
-export default SearchBar
+export default SearchBar;
