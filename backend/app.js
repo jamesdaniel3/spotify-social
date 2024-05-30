@@ -184,7 +184,7 @@ app.post('/user', async (req, res) => {
     try {
         const { id, display_name, followers } = req.body;
 
-        console.log('Received POST request with body:', req.body);
+        // console.log('Received POST request with body:', req.body);
 
         // Create a new document in the 'users' collection with a specific ID
         const docRef = db.collection('users').doc(id);
@@ -210,7 +210,7 @@ app.put("/posts/:currentUserId", async (req, res) => {
         const currentUserId = req.params.currentUserId; // Correctly access currentUserId from params
         const clickedUserId = req.body.clickedUserId;
 
-        console.log(`Updating user ${currentUserId} with recently seen: ${clickedUserId}`);
+        // console.log(`Updating user ${currentUserId} with recently seen: ${clickedUserId}`);
         
         const docRef = db.collection("users").doc(currentUserId);
         const doc = await docRef.get();

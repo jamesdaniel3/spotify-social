@@ -12,6 +12,7 @@ const DiscoverPage = ({ profileInfo }) => {
   const [currentUserData, setCurrentUserData] = useState({});
   const [recentlySeenUsers, setRecentlySeenUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userMap, setUserMap] = useState({}); // Initialize userMap state
 
   const fetchData = async () => {
     try {
@@ -63,12 +64,16 @@ const DiscoverPage = ({ profileInfo }) => {
   const fetchRecentlySeenUsers = async (recentlySeen) => {
     try {
       setLoading(true);
-      const userPromises = recentlySeen.map(async (userId) => {
+      const newUserMap = {}; // Initialize a new userMap object
+
+      // Fetch user data for each user ID in recentlySeen
+      await Promise.all(recentlySeen.map(async (userId) => {
         const response = await axios.get(`http://localhost:8888/user/${userId}`);
-        return response.data;
-      });
-      const users = await Promise.all(userPromises);
-      setRecentlySeenUsers(users);
+        newUserMap[userId] = response.data; // Store response data in the newUserMap object
+      }));
+
+      setUserMap(newUserMap); // Update the userMap state with the newUserMap object
+      setRecentlySeenUsers(recentlySeen); // Set the recentlySeenUsers state
     } catch (error) {
       console.error("Error fetching recently seen users:", error);
     } finally {
@@ -76,12 +81,14 @@ const DiscoverPage = ({ profileInfo }) => {
     }
   };
 
+
   useEffect(() => {
     fetchData();
     checkForUser();
   }, []);
 
   const filteredData = allData.filter((val) => {
+    // console.log(allData)
     if (searchTerm === "") {
       return val;
     } else if (val.display_name && val.display_name.toLowerCase().includes(searchTerm.toLowerCase()) && !val.private_page) {
@@ -135,13 +142,13 @@ const DiscoverPage = ({ profileInfo }) => {
                   ) : (
                     recentlySeenUsers.length > 0 ? (
                         <div className='card-container'>  
-                          {recentlySeenUsers.map((user, index) => (
-                          <UserCard key={index} username={user.display_name} userId={user.id} currentUserId={profileInfo.id} />
-                        ))}
-                      </div>
-                    ) : (
-                      <p>No recent searches.</p>
-                    )
+                          {recentlySeenUsers.map((userId, index) => (
+                            <UserCard key={index} username={userMap[userId].display_name} userId={userId} currentUserId={profileInfo.id} />
+                          ))}
+                        </div>
+                      ) : (
+                        <p>No recent searches.</p>
+                      )
                   )}
                 </div>
               
