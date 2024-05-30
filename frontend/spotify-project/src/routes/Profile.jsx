@@ -16,8 +16,12 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
     topSongsShort.items = topSongsShort.items.slice(0, 5);
   }
 
-  const handleImageClick = () => {
+  const handleSettingsClick = () => {
     setShowModal(true); // Show the modal when the image is clicked
+  };
+
+  const handleProfileClick = (url) => {
+    window.open(url, '_blank');
   };
 
   const handleCloseModal = () => {
@@ -61,7 +65,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
                 src={profileInfo.images[0]}
                 alt={"profile picture"}
                 className="profile-pic"
-                onClick={() => handleImageClick(profileInfo.external_urls.spotify)}
+                onClick={() => handleProfileClick(profileInfo.external_urls.spotify)}
             />
           </div>
           <div className={"profile-info"}>
@@ -72,7 +76,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
                   alt="settings icon"
                   className="settings-icon"
                   style={{zIndex:1000, height: "20px", width: "20px"}}
-                  onClick={handleImageClick}
+                  onClick={handleSettingsClick}
               />
             </h2>
             <p style={{ color: "white" }}>{profileInfo.followers.total} followers</p>
