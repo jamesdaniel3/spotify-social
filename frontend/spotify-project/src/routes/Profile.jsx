@@ -8,6 +8,7 @@ import Header from '../components/Header';
 import LockIcon from '../icons/lock-icon.svg';
 import Card from 'react-bootstrap/Card';
 import imageUrl from "../icons/logo-cropped.png";
+import forgeLogo from '../icons/forge-logo.png';
 
 
 const Profile = ({ profileInfo }) => {
@@ -30,7 +31,7 @@ const Profile = ({ profileInfo }) => {
       { id: 2, title: 'song title' },
       { id: 3, title: 'song title' },
       { id: 4, title: 'song title' },
-      { id: 5, name: 'artist name' },
+      { id: 5, title: 'song title' },
     ],
     likedSongs: [
       { id: 1, title: 'liked song title' },
@@ -69,7 +70,7 @@ const Profile = ({ profileInfo }) => {
       <Header title={"your profile"} />
 
       <div className="profile-header" style={{ backgroundColor: '#D9D9D9' }}>
-        <img className="profile-pic" src="forge-logo.png" alt="Forge Logo" />
+        <img className="profile-pic" src={forgeLogo} alt="Forge Logo" />
         <div className="profile-info">
           <h2 className="username">
             {profile.isPrivate && <img src={LockIcon} alt="Lock Icon" />}
