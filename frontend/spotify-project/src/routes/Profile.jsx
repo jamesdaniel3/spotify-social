@@ -62,15 +62,15 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort}) => {
             <h2 className={"username"} style={{color: "white"}}>{firebaseInfo.display_name}</h2>
             <p style={{color: "white"}}>{profileInfo.followers.total} followers</p>
           </div>
-        </div>
 
-        <div className="profile-content">
-          <h2 style={{justifyContent: "center"}}>Current Favorites</h2>
-          <div className="top-artists">
-            {topArtistsShort.items && <ArtistList data={topArtistsShort.items} />}
-          </div>
-          <div className="top-songs">
-            {topSongsShort.items && <SongList data={topSongsShort.items} />}
+          <div className="profile-content">
+            <h2 style={{justifyContent: "center"}}>Current Favorites</h2>
+            <div className="top-artists">
+              {topArtistsShort.items && <ArtistList data={topArtistsShort.items} />}
+            </div>
+            <div className="top-songs">
+              {topSongsShort.items && <SongList data={topSongsShort.items} />}
+            </div>
           </div>
         </div>
 
