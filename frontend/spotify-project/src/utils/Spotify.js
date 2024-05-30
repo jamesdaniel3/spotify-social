@@ -111,5 +111,5 @@ export const getTopSongs = (time_range = 'short_term') => {
 };
 
 export const getLikedSongs = () => {
-    return axios.get(`/me/tracks`);
+    return axios.get(`/me/tracks?limit=50`);
 };
