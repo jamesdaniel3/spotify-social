@@ -93,6 +93,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
           </div>
         </div>
 
+        {/* Include the modal component and pass the required props */}
         <SettingsModal
             show={showModal}
             handleClose={handleCloseModal}

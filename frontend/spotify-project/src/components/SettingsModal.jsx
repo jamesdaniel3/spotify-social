@@ -1,13 +1,25 @@
-import React, { useEffect } from 'react';
+import React, {useState} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import '../styles/settingsModal.css';
+import axios from 'axios';
 
 const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
-    useEffect(() => {
-        if (show) {
-            console.log('Modal opened with fields:', { displayInfo, privatePage, id });
+    const [displayInfoChecked, setDisplayInfoChecked] = useState(displayInfo);
+    const [privatePageChecked, setPrivatePageChecked] = useState(privatePage);
+
+    const handleApply = async () => {
+        try {
+            await axios.post('http://localhost:8888/api/updateUserSettings', {
+                userId: id,
+                displayInfo: displayInfoChecked,
+                privatePage: privatePageChecked
+            });
+            console.log('User settings updated successfully');
+            handleClose();
+        } catch (error) {
+            console.error('Error updating user settings:', error);
         }
-    }, [show, displayInfo, privatePage, id]);
+    };
 
     return (
         <Modal show={show} onHide={handleClose} centered>
@@ -20,7 +32,8 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                         <Form.Check
                             type="checkbox"
                             label="Display Info"
-                            defaultChecked={displayInfo}
+                            checked={displayInfoChecked}
+                            onChange={(e) => setDisplayInfoChecked(e.target.checked)}
                             className="custom-checkbox"
                         />
                     </Form.Group>
@@ -28,7 +41,8 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                         <Form.Check
                             type="checkbox"
                             label="Private Page"
-                            defaultChecked={privatePage}
+                            checked={privatePageChecked}
+                            onChange={(e) => setPrivatePageChecked(e.target.checked)}
                             className="custom-checkbox"
                         />
                     </Form.Group>
@@ -38,7 +52,7 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button variant="success" onClick={handleClose}>
+                <Button variant="success" onClick={handleApply}>
                     Apply
                 </Button>
             </Modal.Footer>

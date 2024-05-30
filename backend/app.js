@@ -21,11 +21,13 @@ app.post('/api/updateUserSettings', async (req, res) => {
     try {
         const { userId, displayInfo, privatePage } = req.body;
 
+        // Ensure the values are not undefined
+        const updateData = {};
+        if (displayInfo !== undefined) updateData.display_info = displayInfo;
+        if (privatePage !== undefined) updateData.private_page = privatePage;
+
         // Update the user document in Firestore
-        await db.collection('users').doc(userId).update({
-            display_info: displayInfo,
-            private_page: privatePage
-        });
+        await db.collection('users').doc(userId).update(updateData);
 
         res.status(200).send('User settings updated successfully');
     } catch (error) {
