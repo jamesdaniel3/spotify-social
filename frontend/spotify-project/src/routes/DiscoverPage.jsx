@@ -4,10 +4,14 @@ import '../styles/discover.css';
 import UserCard from '../components/UserCard';
 import Header from '../components/Header.jsx';
 import ErrorIcon from '../icons/search-error-icon.png';
+import LoadingIcon from '../icons/loading-icon.png';
 
 const DiscoverPage = ({ profileInfo }) => { 
   const [searchTerm, setSearchTerm] = useState("");
   const [allData, setAllData] = useState([]);
+  const [currentUserData, setCurrentUserData] = useState({});
+  const [recentlySeenUsers, setRecentlySeenUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -19,9 +23,6 @@ const DiscoverPage = ({ profileInfo }) => {
   };
 
   const createProfile = async () => {
-    console.log(profileInfo.id);
-    console.log(profileInfo.display_name);
-    console.log(profileInfo.followers.total);
     const id = profileInfo.id;
     const display_name = profileInfo.display_name;
     const followers = profileInfo.followers.total;
@@ -45,15 +46,33 @@ const DiscoverPage = ({ profileInfo }) => {
     try {
       const result = await axios.get(`http://localhost:8888/user/${id}`);
       console.log(result);
+      setCurrentUserData(result.data);
 
       if (result.data.length === 0) {
         console.log("doesn't exist");
         createProfile();
       } else {
         console.log("exists");
+        fetchRecentlySeenUsers(result.data.recently_seen);
       }
     } catch (error) {
       console.error("Error checking for user:", error);
+    }
+  };
+
+  const fetchRecentlySeenUsers = async (recentlySeen) => {
+    try {
+      setLoading(true);
+      const userPromises = recentlySeen.map(async (userId) => {
+        const response = await axios.get(`http://localhost:8888/user/${userId}`);
+        return response.data;
+      });
+      const users = await Promise.all(userPromises);
+      setRecentlySeenUsers(users);
+    } catch (error) {
+      console.error("Error fetching recently seen users:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,8 +103,13 @@ const DiscoverPage = ({ profileInfo }) => {
                     <div className='discover-subtitle'>top users</div>
                     <div className='card-container'>
                       {filteredData.map((val) => (
-                        <UserCard username={val.display_name} key={val.id} userId={val.id} />
+                        <UserCard key={val.id} username={val.display_name} userId={val.id} currentUserId={profileInfo.id} />
                       ))}
+                      {/*{filteredData
+                        .filter(val => val.id !== profileInfo.id) // Filter out the current user's profile
+                        .map((val) => (
+                          <UserCard key={val.id} username={val.display_name} userId={val.id} currentUserId={profileInfo.id} />
+                        ))}  for not displaying urself*/}
                     </div>
                   </div>
                 ) : (
@@ -99,7 +123,28 @@ const DiscoverPage = ({ profileInfo }) => {
               </div>
             )}
             {!searchTerm && (
-              <div className='discover-subtitle'>recent searches</div>
+              <div>
+                <div className='discover-subtitle'>recent searches</div>
+                
+                  {loading ? (
+                    <div className='loading-container'>
+                      <img src={LoadingIcon} alt='Loading Icon'/>
+                      <p>Loading...</p>
+                    </div>
+                    
+                  ) : (
+                    recentlySeenUsers.length > 0 ? (
+                        <div className='card-container'>  
+                          {recentlySeenUsers.map((user, index) => (
+                          <UserCard key={index} username={user.display_name} userId={user.id} currentUserId={profileInfo.id} />
+                        ))}
+                      </div>
+                    ) : (
+                      <p>No recent searches.</p>
+                    )
+                  )}
+                </div>
+              
             )}
           </div>
         </div>

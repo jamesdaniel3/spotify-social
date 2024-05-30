@@ -138,18 +138,7 @@ app.get('/api/chats/:chatId/messages', async (req, res) => {
 });
 
 
-const generateRandomString = length => {
-    let text = ``;
-    const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
-
-    for(let i = 0; i < length; i++){
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
-}
-
-const stateKey = `spotify_auth_state`
+//DISCOVEER PAGE START
 
 // get all users
 app.get("/posts", async (req, res) => {
@@ -169,7 +158,7 @@ app.get("/posts", async (req, res) => {
 });
 
 
-// get specific users
+// check specific users
 app.get("/user/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -216,25 +205,52 @@ app.post('/user', async (req, res) => {
     }
 });
 
+app.put("/posts/:currentUserId", async (req, res) => {
+    try {
+        const currentUserId = req.params.currentUserId; // Correctly access currentUserId from params
+        const clickedUserId = req.body.clickedUserId;
 
-// // change recently_seen  
-// app.put("/posts/:id", async (req, res) => {
-//     try {
-//         const id = req.params.id;
-//         const username = req.body.recently_seen;
+        console.log(`Updating user ${currentUserId} with recently seen: ${clickedUserId}`);
+        
+        const docRef = db.collection("users").doc(currentUserId);
+        const doc = await docRef.get();
 
-//         console.log(`Updating user ${id} with recently seen: ${username}`);
-        
-//         await updateDoc(doc(db, "users", id), {
-//             recently_seen: arrayUnion(username)
-//         });
-        
-//         res.status(200).json({ message: "success" });
-//     } catch (e) {
-//         console.error(`Error updating recently seen for user ${id}:`, e);
-//         res.status(400).json({ error: e.message });
-//     }
-// });
+        if (!doc.exists) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const data = doc.data();
+        const recentlySeen = data.recently_seen || [];
+
+        if (!recentlySeen.includes(clickedUserId)) {
+            await docRef.update({
+                recently_seen: admin.firestore.FieldValue.arrayUnion(clickedUserId)
+            });
+            res.status(200).json({ message: "success" });
+        } else {
+            res.status(200).json({ message: "User already in recently seen" });
+        }
+    } catch (e) {
+        console.error(`Error updating recently seen for user:`, e);
+        res.status(400).json({ error: e.message });
+    }
+});
+
+
+//LOGIN
+
+const generateRandomString = length => {
+    let text = ``;
+    const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
+
+    for(let i = 0; i < length; i++){
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+}
+
+const stateKey = `spotify_auth_state`
 
 
 app.get(`/login`, (request, response) => {
