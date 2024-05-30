@@ -75,7 +75,7 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
                   src={settingsIcon}
                   alt="settings icon"
                   className="settings-icon"
-                  style={{zIndex:1000, height: "20px", width: "20px"}}
+                  style={{ zIndex: 1000, height: "20px", width: "20px" }}
                   onClick={handleSettingsClick}
               />
             </h2>
@@ -93,7 +93,13 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
           </div>
         </div>
 
-        <SettingsModal show={showModal} handleClose={handleCloseModal} />
+        <SettingsModal
+            show={showModal}
+            handleClose={handleCloseModal}
+            displayInfo={firebaseInfo.display_info}
+            privatePage={firebaseInfo.private_page}
+            id={profileInfo.id}
+        />
       </>
   );
 };
