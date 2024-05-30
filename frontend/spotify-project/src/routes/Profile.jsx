@@ -4,6 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Header from '../components/Header';
+import LockIcon from '../icons/lock-icon.svg';
+import Card from 'react-bootstrap/Card';
+import imageUrl from "../icons/logo-cropped.png";
+import forgeLogo from '../icons/forge-logo.png';
+
 
 const Profile = ({ profileInfo }) => {
   console.log('Profile data:', profileInfo);
@@ -18,12 +24,14 @@ const Profile = ({ profileInfo }) => {
       { id: 2, name: 'artist name' },
       { id: 3, name: 'artist name' },
       { id: 4, name: 'artist name' },
+      { id: 5, name: 'artist name' },
     ],
     topSongs: [
       { id: 1, title: 'song title' },
       { id: 2, title: 'song title' },
       { id: 3, title: 'song title' },
       { id: 4, title: 'song title' },
+      { id: 5, title: 'song title' },
     ],
     likedSongs: [
       { id: 1, title: 'liked song title' },
@@ -59,22 +67,23 @@ const Profile = ({ profileInfo }) => {
 
   return (
     <div className="profile-container">
+      <Header title={"your profile"} />
+
       <div className="profile-header" style={{ backgroundColor: '#D9D9D9' }}>
-        <img className="profile-pic" src="forge-logo.png" alt="Forge Logo" />
+        <img className="profile-pic" src={forgeLogo} alt="Forge Logo" />
         <div className="profile-info">
           <h2 className="username">
-            {profile.isPrivate && <span className="lock-icon">🔒</span>}
+            {profile.isPrivate && <img src={LockIcon} alt="Lock Icon" />}
             {profile.username}
           </h2>
           <p>{profile.followers} followers {profile.following} following</p>
           <p>{profile.bio}</p>
           <p>favorite genres: {profile.favoriteGenres}</p>
           <button className="edit-button" onClick={() => setIsEditing(true)}>
-          edit profile
-        </button>
+            edit profile
+          </button>
         </div>
       </div>
-      
 
       <Modal show={isEditing} onHide={() => setIsEditing(false)} dialogClassName="dark-modal">
         <Modal.Header closeButton>
@@ -155,23 +164,38 @@ const Profile = ({ profileInfo }) => {
       <div className="profile-content">
         <div className="top-artists">
           <h3>top artists</h3>
-          <div className="artist-list">
-            {profile.displayTopArtists && profile.topArtists.map((artist) => (
-              <div className="artist-item" key={artist.id}>
-                <div className="artist-pic"></div>
-                <p>{artist.name}</p>
-              </div>
+          <div className="card-container">
+            {profile.topArtists.map(artist => (
+              <Card key={artist.id} id='user-card'>
+                <div className='top-container'>
+                  <div className="circle-container">
+                    <img src={imageUrl} alt="User Profile" className="profile-image" />
+                  </div>
+                </div>
+                <Card.Body id='card-body'>
+                  <Card.Title id='card-title'>{artist.name}</Card.Title>
+                  <Card.Text id='card-text'>profile</Card.Text>
+                </Card.Body>
+              </Card>
             ))}
           </div>
         </div>
+        
         <div className="top-songs">
           <h3>top songs</h3>
-          <div className="song-list">
-            {profile.displayLikedSongs && profile.topSongs.map((song) => (
-              <div className="song-item" key={song.id}>
-                <div className="song-pic"></div>
-                <p>{song.title}</p>
-              </div>
+          <div className="card-container">
+            {profile.topSongs.map(song => (
+              <Card key={song.id} id='user-card'>
+                <div className='top-container'>
+                  <div className="circle-container">
+                    <img src={imageUrl} alt="User Profile" className="profile-image" />
+                  </div>
+                </div>
+                <Card.Body id='card-body'>
+                  <Card.Title id='card-title'>{song.title}</Card.Title>
+                  <Card.Text id='card-text'>artist name</Card.Text>
+                </Card.Body>
+              </Card>
             ))}
           </div>
         </div>
