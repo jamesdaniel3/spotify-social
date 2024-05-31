@@ -5,13 +5,13 @@ import Header from "../components/Header.jsx";
 import ArtistList from "../components/ArtistList.jsx";
 import SongList from "../components/SongList.jsx";
 
-export default function SearchedUser({profileInfo}) {
+export default function SearchedUser({ profileInfo }) {
     const { id } = useParams();
     const [firebaseInfo, setFirebaseInfo] = useState({});
     const [message, setMessage] = useState("");
 
     let current_user_id = "";
-    if(profileInfo){
+    if (profileInfo) {
         current_user_id = profileInfo.id;
     }
 
@@ -30,10 +30,19 @@ export default function SearchedUser({profileInfo}) {
         }
     }, [id]);
 
-    const handleSendMessage = () => {
-        console.log("Message sent:", message);
-        // Reset the message input
-        setMessage("");
+
+    const handleSendMessage = async () => {
+        try {
+            console.log(id)
+            await axios.post('http://localhost:8888/api/sendMessage', {
+                current_user_id: current_user_id,
+                recipient_id: id,
+                content: message
+            });
+            setMessage("");
+        } catch (error) {
+            console.error("Error sending message:", error);
+        }
     };
 
     return (

@@ -36,6 +36,55 @@ app.post('/api/updateUserSettings', async (req, res) => {
     }
 });
 
+app.post('/api/sendMessage', async (req, res) => {
+    try {
+        const { current_user_id, recipient_id, content } = req.body;
+
+        // Create a new message document
+        const newMessageRef = db.collection('messages').doc();
+        const newMessageId = newMessageRef.id;
+        const timestamp = new Date().toISOString();
+
+        await newMessageRef.set({
+            content: content,
+            sender: current_user_id,
+            timestamp: timestamp
+        });
+
+        // Check if a chat document exists with the participants
+        const chatQuery = await db.collection('chats')
+            .where('participants', 'array-contains', current_user_id)
+            .get();
+
+        let chatDoc = null;
+
+        chatQuery.forEach(doc => {
+            const participants = doc.data().participants;
+            if (participants.includes(recipient_id)) {
+                chatDoc = doc;
+            }
+        });
+
+        if (chatDoc) {
+            // If chat document exists, update it with the new message ID
+            await db.collection('chats').doc(chatDoc.id).update({
+                messages: admin.firestore.FieldValue.arrayUnion(newMessageId)
+            });
+        } else {
+            // If chat document does not exist, create a new one
+            await db.collection('chats').add({
+                participants: [current_user_id, recipient_id],
+                messages: [newMessageId]
+            });
+        }
+
+        res.status(200).send('Message sent successfully');
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'An error occurred while sending the message' });
+    }
+});
+
 app.post('/api/updateUserTopData', async (req, res) => {
     try {
         const { userId, topArtists, topSongs } = req.body;
@@ -111,6 +160,7 @@ app.get('/api/users/:userId', async (req, res) => {
 });
 
 
+// Create message and add it to chat
 app.post('/api/chats/:chatId/messages', async (req, res) => {
     try {
         const chatId = req.params.chatId;
