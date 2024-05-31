@@ -143,8 +143,8 @@ const DiscoverPage = ({ profileInfo }) => {
                 <div className='discover-subtitle'>recent searches</div>
                 
                   {loading ? (
-                    <div className='loading-container'>
-                      <img src={LoadingIcon} alt='Loading Icon' style={{height:"8rem", width:"8rem"}}/>
+                  <div className='loading-container' style={{marginTop: "-275px"}}>
+                      <img src={LoadingIcon} alt='Loading Icon'/>
                       <p>Loading...</p>
                     </div>
                     

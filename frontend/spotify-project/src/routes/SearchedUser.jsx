@@ -5,10 +5,15 @@ import Header from "../components/Header.jsx";
 import ArtistList from "../components/ArtistList.jsx";
 import SongList from "../components/SongList.jsx";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../styles/searchedUser.css';
+
 export default function SearchedUser({ profileInfo }) {
     const { id } = useParams();
     const [firebaseInfo, setFirebaseInfo] = useState({});
     const [message, setMessage] = useState("");
+    const [messageSent, setMessageSent] = useState(false);
 
     let current_user_id = "";
     if (profileInfo) {
@@ -30,19 +35,30 @@ export default function SearchedUser({ profileInfo }) {
         }
     }, [id]);
 
-
     const handleSendMessage = async () => {
-        try {
+        if (message) {
+            try {
             await axios.post('http://localhost:8888/api/sendMessage', {
                 current_user_id: current_user_id,
                 recipient_id: id,
                 content: message
             });
             setMessage("");
+            setMessageSent(true);
         } catch (error) {
             console.error("Error sending message:", error);
+            toast.error("Failed to send message.");
+        }
+
         }
     };
+
+    useEffect(() => {
+        if (messageSent) {
+            toast.success("Message Sent!");
+            setMessageSent(false);
+        }
+    }, [messageSent]);
 
     return (
         <>
@@ -56,23 +72,22 @@ export default function SearchedUser({ profileInfo }) {
                         style={{ marginRight: '20px' }}
                     />
                     {firebaseInfo.open_for_messages &&
-                        id !== profileInfo.id &&(
-                        <div className="message-input-container" style={{ display: 'flex', alignItems: 'center' }}>
-                            <input
-                                type="text"
-                                placeholder="Send a message"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                style={{ padding: '10px', borderRadius: '5px', marginRight: '10px' }}
-                            />
-                            <button
-                                onClick={handleSendMessage}
-                                style={{ padding: '10px 20px', backgroundColor: '#1DB954', color: 'white', border: 'none', borderRadius: '5px' }}
-                            >
-                                Send
-                            </button>
-                        </div>
-                    )}
+                        id !== profileInfo.id && (
+                            <div className="message-input-container" style={{ display: 'flex', alignItems: 'center' }}>
+                                <input
+                                    type="text"
+                                    placeholder="Send a message"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    style={{ padding: '10px', borderRadius: '5px', marginRight: '10px' }}
+                                />
+                                <button className="send-button"
+                                    onClick={handleSendMessage}
+                                >
+                                    Send
+                                </button>
+                            </div>
+                        )}
                 </div>
                 <div className={"profile-info"}>
                     <h2 className={"username"} style={{ color: "white" }}>
@@ -102,6 +117,7 @@ export default function SearchedUser({ profileInfo }) {
                     </div>
                 )}
             </div>
+            <ToastContainer style={{ zIndex: 9999 }} />
         </>
     );
 }
