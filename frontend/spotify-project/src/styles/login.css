@@ -29,7 +29,6 @@
     border-color: #17a74a;
 }
 
-
 /* Styling for the welcome message */
 .welcome {
     text-align: center;
@@ -38,6 +37,7 @@
 .no-account {
     text-align: center;
 }
+
 h1 {
     font-size: 8rem;
 }
@@ -59,4 +59,49 @@ h1 {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* Split screen styling */
+.split {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    width: 70%;
+    left: 0;
+    background-color: black; /* Set background to black */
+    color: white; /* Ensure text is visible on black background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    padding: 20px; /* Add padding to fine-tune position */
+}
+
+.right {
+    width: 30%;
+    right: 0;
+    background-color: black; /* Set background to black */
+}
+
+/* Conveyor belt for album covers */
+.album-conveyor {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.album-cover {
+    width: 80%; /* Adjust width as needed */
+    margin-bottom: 20px; /* Space between album covers */
+    position: absolute; /* Position each album cover absolutely */
 }
