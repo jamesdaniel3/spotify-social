@@ -11,14 +11,42 @@
 .modal-footer-custom {
     background-color: black;
     color: white;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .custom-checkbox .form-check-input:checked {
-    background-color: green;
-    border-color: green;
+    background-color: #1DB954;
+    border-color: #1DB954;
 }
 
 .custom-checkbox .form-check-input:checked + .form-check-label::before {
-    background-color: green;
-    border-color: green;
+    background-color: #1DB954;
+    border-color: #1DB954;
+}
+
+.custom-btn {
+    background-color: #1DB954;
+    border-color: #1DB954;
+    color: white;
+}
+
+.custom-btn:hover {
+    background-color: #17a74a; /* Slightly darker shade for hover effect */
+    border-color: #17a74a;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem; /* Adjust this value as needed */
+}
+
+.form-group-checkbox .form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-group-checkbox .form-check-label {
+    margin-left: 0.5rem; /* Adjust this value as needed */
 }
