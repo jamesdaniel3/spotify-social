@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import '../styles/settingsModal.css';
 import axios from 'axios';
@@ -27,7 +27,7 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
             </Modal.Header>
             <Modal.Body className="modal-body-custom">
                 <Form>
-                    <Form.Group controlId="formDisplayInfo">
+                    <Form.Group controlId="formDisplayInfo" className="form-group-checkbox">
                         <Form.Check
                             type="checkbox"
                             label="Display Current Favorites"
@@ -36,7 +36,7 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                             className="custom-checkbox"
                         />
                     </Form.Group>
-                    <Form.Group controlId="formPrivatePage">
+                    <Form.Group controlId="formPrivatePage" className="form-group-checkbox">
                         <Form.Check
                             type="checkbox"
                             label="Make Page Private"
@@ -51,7 +51,7 @@ const SettingsModal = ({ show, handleClose, displayInfo, privatePage, id }) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button variant="success" onClick={handleApply}>
+                <Button className="custom-btn" onClick={handleApply}>
                     Apply
                 </Button>
             </Modal.Footer>
