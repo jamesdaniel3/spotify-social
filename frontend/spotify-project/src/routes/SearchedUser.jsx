@@ -5,6 +5,9 @@ import Header from "../components/Header.jsx";
 import ArtistList from "../components/ArtistList.jsx";
 import SongList from "../components/SongList.jsx";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function SearchedUser({ profileInfo }) {
     const { id } = useParams();
     const [firebaseInfo, setFirebaseInfo] = useState({});
@@ -38,9 +41,12 @@ export default function SearchedUser({ profileInfo }) {
                 recipient_id: id,
                 content: message
             });
+            console.log("message sent!");
             setMessage("");
+            toast.success("Message Sent!");
         } catch (error) {
             console.error("Error sending message:", error);
+            toast.error("Failed to send message.");
         }
     };
 
@@ -102,6 +108,7 @@ export default function SearchedUser({ profileInfo }) {
                     </div>
                 )}
             </div>
+            <ToastContainer />
         </>
     );
 }
