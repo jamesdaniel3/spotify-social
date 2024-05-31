@@ -5,10 +5,15 @@ import Header from "../components/Header.jsx";
 import ArtistList from "../components/ArtistList.jsx";
 import SongList from "../components/SongList.jsx";
 
-export default function SearchedUser() {
+export default function SearchedUser({profileInfo}) {
     const { id } = useParams();
     const [firebaseInfo, setFirebaseInfo] = useState({});
     const [message, setMessage] = useState("");
+
+    let current_user_id = "";
+    if(profileInfo){
+        current_user_id = profileInfo.id;
+    }
 
     const fetchUserData = async () => {
         try {

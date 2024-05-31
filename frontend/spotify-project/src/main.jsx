@@ -67,7 +67,7 @@ const App = () => {
                 <Route path="/messages" element={<Messages profileInfo={profile} />} />
                 <Route path="/profile" element={<Profile profileInfo={profile} topArtistsShort={topArtistsShort} topSongsShort={topSongsShort}/>} />
                 <Route path="/chats/:id" element={<Chat profileInfo={profile}/>} />
-                <Route path="/profile/:id" element={<SearchedUser />} />
+                <Route path="/profile/:id" element={<SearchedUser profileInfo={profile}/>} />
             </Routes>
         </>
     );
