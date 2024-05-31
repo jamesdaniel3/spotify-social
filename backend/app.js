@@ -114,7 +114,7 @@ app.post('/api/chats', async (req, res) => {
             .where('participants', 'array-contains', userId)
             .get();
 
-        // Create a map to store chat document IDs and their participants
+        // Create a map to store chat document IDs, their participants, and titles
         const chatMap = new Map();
 
         // Iterate over the query results and populate the map
@@ -122,15 +122,17 @@ app.post('/api/chats', async (req, res) => {
             const chatData = doc.data();
             const chatId = doc.id;
             const participants = chatData.participants;
+            const title = chatData.title; // Get the title field
 
-            // Add the chat ID and participants to the map
-            chatMap.set(chatId, participants);
+            // Add the chat ID, participants, and title to the map
+            chatMap.set(chatId, { participants, title });
         });
 
         // Convert the map to an array of objects for easier JSON serialization
-        const chatArray = Array.from(chatMap.entries()).map(([chatId, participants]) => ({
+        const chatArray = Array.from(chatMap.entries()).map(([chatId, { participants, title }]) => ({
             chatId,
-            participants
+            participants,
+            title // Include the title field in the response
         }));
 
         res.json(chatArray);
@@ -139,6 +141,7 @@ app.post('/api/chats', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching chats' });
     }
 });
+
 
 app.get('/api/users/:userId', async (req, res) => {
     try {

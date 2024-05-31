@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Header from "../components/Header.jsx";
-import '../styles/messages.css'; // Import the CSS file for styling
+import '../styles/messages.css';
 
 const Messages = ({ profileInfo }) => {
     const [chats, setChats] = useState([]);
@@ -12,6 +12,7 @@ const Messages = ({ profileInfo }) => {
             try {
                 const response = await axios.post('http://localhost:8888/api/chats', { userId: profileInfo.id });
                 const fetchedChats = response.data;
+
 
                 const updatedChats = await Promise.all(
                     fetchedChats.map(async (chat) => {
@@ -41,7 +42,8 @@ const Messages = ({ profileInfo }) => {
         }
     }, [profileInfo]);
 
-    console.log(chats);
+    console.log(chats)
+
 
     return (
         <>
@@ -55,7 +57,12 @@ const Messages = ({ profileInfo }) => {
                                 <td>
                                     <div className={"chat-container"}>
                                         <Link to={`/chats/${chat.chatId}`} className="chat-link">
-                                            <div style={{color:"white"}}>{chat.participants.join(', ')}</div>
+                                            {chat.title &&
+                                                <div style={{color:"white"}}>{chat.title}</div>
+                                            }
+                                            {!chat.title &&
+                                                <div style={{color:"white"}}>{chat.participants.join(', ')}</div>
+                                            }
                                         </Link>
                                     </div>
                                 </td>
