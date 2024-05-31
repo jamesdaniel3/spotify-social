@@ -144,7 +144,7 @@ const DiscoverPage = ({ profileInfo }) => {
                 
                   {loading ? (
                     <div className='loading-container'>
-                      <img src={LoadingIcon} alt='Loading Icon' style={{height:"8rem", width:"8rem"}}/>
+                      <img src={LoadingIcon} alt='Loading Icon'/>
                       <p>Loading...</p>
                     </div>
                     

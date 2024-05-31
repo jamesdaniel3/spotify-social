@@ -109,7 +109,7 @@ const Messages = ({ profileInfo }) => {
                     <img
                         src={LoadingIcon}
                         alt='Loading Icon'
-                        style={{height:"8rem", width:"8rem"}}
+                        style={{height:"8rem"}}
                     />
                     <p>Loading...</p>
                 </div>
