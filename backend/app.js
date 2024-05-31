@@ -36,6 +36,49 @@ app.post('/api/updateUserSettings', async (req, res) => {
     }
 });
 
+app.post('/api/removeUserFromChat', async (req, res) => {
+    try {
+        const { chatId, userId } = req.body;
+
+        const chatRef = db.collection('chats').doc(chatId);
+        const chatDoc = await chatRef.get();
+
+        if (!chatDoc.exists) {
+            return res.status(404).json({ error: 'Chat not found' });
+        }
+
+        const chatData = chatDoc.data();
+        const updatedParticipants = chatData.participants.filter(participant => participant !== userId);
+
+        if (updatedParticipants.length === 0) {
+            await chatRef.delete();
+            return res.status(200).send('Chat deleted successfully');
+        } else {
+            await chatRef.update({ participants: updatedParticipants });
+            return res.status(200).send('User removed from chat successfully');
+        }
+    } catch (error) {
+        console.error('Error removing user from chat:', error);
+        res.status(500).json({ error: 'An error occurred while removing user from chat' });
+    }
+});
+
+
+app.post('/api/updateChatTitle', async (req, res) => {
+    try {
+        const { chatId, title } = req.body;
+
+        // Update the chat document in Firestore
+        await db.collection('chats').doc(chatId).update({ title });
+
+        res.status(200).send('Chat title updated successfully');
+    } catch (error) {
+        console.error('Error updating chat title:', error);
+        res.status(500).json({ error: 'An error occurred while updating chat title' });
+    }
+});
+
+
 app.post('/api/sendMessage', async (req, res) => {
     try {
         const { current_user_id, recipient_id, content } = req.body;
@@ -74,7 +117,8 @@ app.post('/api/sendMessage', async (req, res) => {
             // If chat document does not exist, create a new one
             await db.collection('chats').add({
                 participants: [current_user_id, recipient_id],
-                messages: [newMessageId]
+                messages: [newMessageId],
+                title:""
             });
         }
 
@@ -114,7 +158,7 @@ app.post('/api/chats', async (req, res) => {
             .where('participants', 'array-contains', userId)
             .get();
 
-        // Create a map to store chat document IDs and their participants
+        // Create a map to store chat document IDs, their participants, and titles
         const chatMap = new Map();
 
         // Iterate over the query results and populate the map
@@ -122,15 +166,17 @@ app.post('/api/chats', async (req, res) => {
             const chatData = doc.data();
             const chatId = doc.id;
             const participants = chatData.participants;
+            const title = chatData.title; // Get the title field
 
-            // Add the chat ID and participants to the map
-            chatMap.set(chatId, participants);
+            // Add the chat ID, participants, and title to the map
+            chatMap.set(chatId, { participants, title });
         });
 
         // Convert the map to an array of objects for easier JSON serialization
-        const chatArray = Array.from(chatMap.entries()).map(([chatId, participants]) => ({
+        const chatArray = Array.from(chatMap.entries()).map(([chatId, { participants, title }]) => ({
             chatId,
-            participants
+            participants,
+            title // Include the title field in the response
         }));
 
         res.json(chatArray);
@@ -139,6 +185,7 @@ app.post('/api/chats', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching chats' });
     }
 });
+
 
 app.get('/api/users/:userId', async (req, res) => {
     try {
