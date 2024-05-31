@@ -15,7 +15,6 @@ const DiscoverPage = ({ profileInfo }) => {
   const [userMap, setUserMap] = useState({}); // Initialize userMap state
 
 
-  // console.log(profileInfo)
 
   const fetchData = async () => {
     try {
@@ -53,19 +52,17 @@ const DiscoverPage = ({ profileInfo }) => {
     }
   };
 
+
   const checkForUser = async () => {
     const id = profileInfo.id;
 
     try {
       const result = await axios.get(`http://localhost:8888/user/${id}`);
-      // console.log(result);
       setCurrentUserData(result.data);
 
       if (result.data.length === 0) {
-        // console.log("doesn't exist");
         createProfile();
       } else {
-        // console.log("exists");
         fetchRecentlySeenUsers(result.data.recently_seen);
       }
     } catch (error) {
@@ -77,6 +74,10 @@ const DiscoverPage = ({ profileInfo }) => {
     try {
       setLoading(true);
       const newUserMap = {}; // Initialize a new userMap object
+
+      if(recentlySeen[0] === ""){
+        recentlySeen = recentlySeen.slice(1, recentlySeen.length)
+      }
 
       // Fetch user data for each user ID in recentlySeen
       await Promise.all(recentlySeen.map(async (userId) => {
@@ -101,7 +102,6 @@ const DiscoverPage = ({ profileInfo }) => {
 
 
   const filteredData = allData.filter((val) => {
-    // console.log(allData)
     if (searchTerm === "") {
       return val;
     } else if (val.display_name.toLowerCase() && val.display_name.toLowerCase().includes(searchTerm.toLowerCase()) && !val.private_page) {
