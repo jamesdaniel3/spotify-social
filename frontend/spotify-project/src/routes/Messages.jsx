@@ -105,7 +105,7 @@ const Messages = ({ profileInfo }) => {
     return (
         <>
             {loading &&
-                <div className='loading-container'>
+                <div className='loading-container' style={{marginTop: "-70px"}}>
                     <img
                         src={LoadingIcon}
                         alt='Loading Icon'
