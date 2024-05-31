@@ -11,6 +11,9 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    padding-bottom: 8rem;
+    padding-top: 8rem;
+
 }
 
 .message-form {

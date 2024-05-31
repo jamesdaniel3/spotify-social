@@ -8,7 +8,9 @@
     display: inline-block;
 }
 
-
+.message-form{
+    background: #141414;
+}
 
 .own-message {
     background-color: #dcf8c6;
@@ -23,7 +25,8 @@
 }
 
 .message-content {
-    font-size: 14px;
+    font-size: 1.75rem;
+    color: #141414;
 }
 
 .message-timestamp {

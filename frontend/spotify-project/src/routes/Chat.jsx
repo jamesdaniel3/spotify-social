@@ -47,7 +47,7 @@ export default function Chat({ profileInfo }) {
         <>
             <Header title={"messaging"} />
             <div className="messages">
-                <div className="messages-container">
+                <div className="messages-container" style={{overflow:"scroll"}}>
                     {messages.map((message, index) => (
                         <Message
                             key={index}
