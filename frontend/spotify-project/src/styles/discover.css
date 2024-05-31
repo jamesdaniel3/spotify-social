@@ -138,3 +138,8 @@
 .loading-container img {
   height: 450px;
 }
+
+.main-container {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}

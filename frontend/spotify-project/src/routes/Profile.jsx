@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/profile.css';
 import ArtistList from '../components/ArtistList';
-import SongList from "../components/SongList.jsx";
+import SongList from "../components/SongList";
 import axios from "axios";
 import Header from "../components/Header.jsx";
 import settingsIcon from '../icons/settings.png';

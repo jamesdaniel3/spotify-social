@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/artistList.css'; // Ensure the correct path to your CSS file
+import '../styles/artistList.css';
 
 const ArtistList = ({ data }) => {
     const handleImageClick = (url) => {
