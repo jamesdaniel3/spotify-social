@@ -17,6 +17,12 @@ app.use(cors());
 app.use(express.json());
 
 
+// Import the router modules
+const forumsRouter = require("./forums");
+
+// Use the router modules
+app.use("/forums", forumsRouter);
+
 app.post('/api/updateUserSettings', async (req, res) => {
     try {
         const { userId, displayInfo, privatePage } = req.body;

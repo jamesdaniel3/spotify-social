@@ -1,3 +1,17 @@
 .modal-content{
-    color:black !important;
+    text-align: left !important;
 }
+.posting-modal .btn{
+    background-color: #1DB954;
+    border:none;
+}
+.posting-modal .btn-container {
+    margin-right:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+}
+.post .btn {
+    background-color: #1DB954;
+    border: none;
+}
+

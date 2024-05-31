@@ -31,7 +31,6 @@ const App = () => {
         likedSongs,
     } = grabSpotifyData();
 
-
     useEffect(() => {
         const updateUserTopData = async () => {
             if (profile && topArtistsShort.items && topSongsShort.items) {
@@ -59,8 +58,8 @@ const App = () => {
         <>
             <Routes>
                 <Route path="/" element={profile ? <DiscoverPage profileInfo={profile} /> : <Login />} />
-                <Route path="/forums" element={<AllForums />} />
-                <Route path="/forums/:id" element={<SingleForum />} />
+                <Route path="/forums" element={<AllForums profileInfo={profile} />} />
+                <Route path="/forums/:id" element={<SingleForum profileInfo={profile}/>} />
                 <Route path="/liked-songs" element={<LikedSongs likedSongs={likedSongs} />} />
                 <Route path="/top-artists" element={<TopArtists topArtistsShort={topArtistsShort} topArtistsMedium={topArtistsMedium} topArtistsLong={topArtistsLong} />} />
                 <Route path="/top-songs" element={<TopSongs topSongsShort={topSongsShort} topSongsMedium={topSongsMedium} topSongsLong={topSongsLong} />} />
