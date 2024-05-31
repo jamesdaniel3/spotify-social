@@ -16,8 +16,10 @@
 .message-form {
     display: flex;
     border-top: 1px solid #ddd;
-    padding: 10px;
-    background-color: #f9f9f9;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .message-input {

@@ -58,16 +58,18 @@ export default function Chat({ profileInfo }) {
                         />
                     ))}
                 </div>
-                <form onSubmit={handleSubmit} className="message-form">
-                    <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type your message"
-                        className="message-input"
-                    />
-                    <button type="submit" className="send-button">Send</button>
-                </form>
+                <div className={"send-message"}>
+                    <form onSubmit={handleSubmit} className="message-form">
+                        <input
+                            type="text"
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            placeholder="Type your message"
+                            className="message-input"
+                        />
+                        <button type="submit" className="send-button">Send</button>
+                    </form>
+                </div>
             </div>
         </>
     );
