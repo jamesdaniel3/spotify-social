@@ -67,7 +67,7 @@ export default function SearchedUser({ profileInfo }) {
                             />
                             <button
                                 onClick={handleSendMessage}
-                                style={{ padding: '10px 20px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px' }}
+                                style={{ padding: '10px 20px', backgroundColor: '#1DB954', color: 'white', border: 'none', borderRadius: '5px' }}
                             >
                                 Send
                             </button>
