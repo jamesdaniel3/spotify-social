@@ -7,11 +7,13 @@ import edit from '../icons/edit.png';
 import remove from '../icons/remove.png';
 import EditChatModal from "../components/EditChatModal";
 import RemoveChatModal from "../components/RemoveChatModal";
+import LoadingIcon from "../icons/loading-icon.png";
 
 const Messages = ({ profileInfo }) => {
     const [chats, setChats] = useState([]);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [selectedChat, setSelectedChat] = useState(null);
     let user_id = "";
     if(profileInfo){
@@ -44,6 +46,8 @@ const Messages = ({ profileInfo }) => {
                 setChats(updatedChats);
             } catch (error) {
                 console.error('Error fetching chats:', error);
+            } finally {
+                setLoading(false)
             }
         };
 
@@ -100,60 +104,76 @@ const Messages = ({ profileInfo }) => {
 
     return (
         <>
-            <Header title={"your messages"} />
-            <div className={"chats"}>
-                {chats.length > 0 ? (
-                    <table className="chats-table">
-                        <tbody>
-                        {chats.map((chat) => (
-                            <tr key={chat.chatId}>
-                                <td>
-                                    <div className="chat-container">
-                                        <Link to={`/chats/${chat.chatId}`} className="chat-link">
-                                            {chat.title ? (
-                                                <div style={{color:"white"}}>{chat.title}</div>
-                                            ) : (
-                                                <div style={{color:"white"}}>{chat.participants.join(', ')}</div>
-                                            )}
-                                        </Link>
-                                        <img
-                                            src={edit}
-                                            alt="Edit"
-                                            className="edit-icon"
-                                            onClick={() => handleEditClick(chat)}
-                                        />
-                                        <img
-                                            src={remove}
-                                            alt="Remove"
-                                            className="remove-icon"
-                                            onClick={() => handleRemoveClick(chat)}
-                                        />
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    <p>No chats found.</p>
-                )}
-            </div>
-            {isEditModalOpen && (
-                <EditChatModal
-                    show={isEditModalOpen}
-                    handleClose={closeEditModal}
-                    chat={selectedChat}
-                    updateChatTitle={updateChatTitle}
-                />
-            )}
-            {isRemoveModalOpen && (
-                <RemoveChatModal
-                    show={isRemoveModalOpen}
-                    handleClose={closeRemoveModal}
-                    chat={selectedChat}
-                    removeUserFromChat={removeUserFromChat}
-                />
-            )}
+            {loading &&
+                <div className='loading-container'>
+                    <img
+                        src={LoadingIcon}
+                        alt='Loading Icon'
+                        style={{height:"8rem", width:"8rem"}}
+                    />
+                    <p>Loading...</p>
+                </div>
+            }
+            {!loading &&
+                <>
+                    <Header title={"your messages"} />
+                    <div className={"chats"}>
+                        {chats.length > 0 ? (
+                            <table className="chats-table">
+                                <tbody>
+                                {chats.map((chat) => (
+                                    <tr key={chat.chatId}>
+                                        <td>
+                                            <div className="chat-container">
+                                                <Link to={`/chats/${chat.chatId}`} className="chat-link">
+                                                    {chat.title ? (
+                                                        <div style={{color:"white"}}>{chat.title}</div>
+                                                    ) : (
+                                                        <div style={{color:"white"}}>{chat.participants.join(', ')}</div>
+                                                    )}
+                                                </Link>
+                                                <img
+                                                    src={edit}
+                                                    alt="Edit"
+                                                    className="edit-icon"
+                                                    onClick={() => handleEditClick(chat)}
+                                                />
+                                                <img
+                                                    src={remove}
+                                                    alt="Remove"
+                                                    className="remove-icon"
+                                                    onClick={() => handleRemoveClick(chat)}
+                                                />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p>No chats found.</p>
+                        )}
+                        {isEditModalOpen && (
+                            <EditChatModal
+                                show={isEditModalOpen}
+                                handleClose={closeEditModal}
+                                chat={selectedChat}
+                                updateChatTitle={updateChatTitle}
+                            />
+                        )}
+                        {isRemoveModalOpen && (
+                            <RemoveChatModal
+                                show={isRemoveModalOpen}
+                                handleClose={closeRemoveModal}
+                                chat={selectedChat}
+                                removeUserFromChat={removeUserFromChat}
+                            />
+                        )}
+
+                    </div>
+
+                </>
+            }
         </>
     );
 };
