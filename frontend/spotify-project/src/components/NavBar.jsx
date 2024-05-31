@@ -22,7 +22,7 @@ const NavBar = () => {
               <Offcanvas.Header closeButton className="custom-close-button"/>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                    <Nav.Link href="/" className={"nav-link"}>discover</Nav.Link>
+                    <Nav.Link href="/" className={"nav-link"}>find users</Nav.Link>
                     <Nav.Link href="/profile" className={"nav-link"}>profile</Nav.Link>
                     <Nav.Link href="/messages" className={"nav-link"}>messages</Nav.Link>
                     <Nav.Link href="/forums" className={"nav-link"}>forums</Nav.Link>
