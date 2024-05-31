@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Header from "../components/Header.jsx";
+import '../styles/messages.css'; // Import the CSS file for styling
 
 const Messages = ({ profileInfo }) => {
     const [chats, setChats] = useState([]);
@@ -39,22 +41,32 @@ const Messages = ({ profileInfo }) => {
         }
     }, [profileInfo]);
 
-    console.log(chats)
+    console.log(chats);
 
     return (
         <>
-            <h2>Messages</h2>
-            {chats.length > 0 ? (
-                <ul>
-                    {chats.map((chat) => (
-                        <li key={chat.chatId}>
-                            <Link to={`/chats/${chat.chatId}`}>{chat.participants.join(', ')}</Link>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No chats found.</p>
-            )}
+            <Header title={"your messages"} />
+            <div className={"chats"}>
+                {chats.length > 0 ? (
+                    <table className="chats-table">
+                        <tbody>
+                        {chats.map((chat) => (
+                            <tr key={chat.chatId}>
+                                <td>
+                                    <div className={"chat-container"}>
+                                        <Link to={`/chats/${chat.chatId}`} className="chat-link">
+                                            <div style={{color:"white"}}>{chat.participants.join(', ')}</div>
+                                        </Link>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No chats found.</p>
+                )}
+            </div>
         </>
     );
 };

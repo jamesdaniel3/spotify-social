@@ -1,0 +1,42 @@
+.chats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.chats-table td {
+    padding: 10px 0;
+    border: none;
+}
+
+.chats-table tr {
+    border: none;
+}
+
+.chat-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.chat-link:hover {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.chats {
+    padding: 1rem;
+    margin: 2rem;
+    background-color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+.chat-container {
+    margin-top: 1rem;
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+}
