@@ -3,16 +3,19 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Header from "../components/Header.jsx";
 import '../styles/messages.css';
+import edit from '../icons/edit.png';
+import EditChatModal from "../components/EditChatModal";
 
 const Messages = ({ profileInfo }) => {
     const [chats, setChats] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedChat, setSelectedChat] = useState(null);
 
     useEffect(() => {
         const fetchChats = async () => {
             try {
                 const response = await axios.post('http://localhost:8888/api/chats', { userId: profileInfo.id });
                 const fetchedChats = response.data;
-
 
                 const updatedChats = await Promise.all(
                     fetchedChats.map(async (chat) => {
@@ -42,8 +45,29 @@ const Messages = ({ profileInfo }) => {
         }
     }, [profileInfo]);
 
-    console.log(chats)
+    const handleEditClick = (chat) => {
+        setSelectedChat(chat);
+        setIsModalOpen(true);
+    };
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedChat(null);
+    };
+
+    const updateChatTitle = async (chatId, newTitle) => {
+        try {
+            await axios.post('http://localhost:8888/api/updateChatTitle', { chatId, title: newTitle });
+            setChats((prevChats) =>
+                prevChats.map((chat) =>
+                    chat.chatId === chatId ? { ...chat, title: newTitle } : chat
+                )
+            );
+            closeModal();
+        } catch (error) {
+            console.error('Error updating chat title:', error);
+        }
+    };
 
     return (
         <>
@@ -55,15 +79,20 @@ const Messages = ({ profileInfo }) => {
                         {chats.map((chat) => (
                             <tr key={chat.chatId}>
                                 <td>
-                                    <div className={"chat-container"}>
+                                    <div className="chat-container">
                                         <Link to={`/chats/${chat.chatId}`} className="chat-link">
-                                            {chat.title &&
+                                            {chat.title ? (
                                                 <div style={{color:"white"}}>{chat.title}</div>
-                                            }
-                                            {!chat.title &&
+                                            ) : (
                                                 <div style={{color:"white"}}>{chat.participants.join(', ')}</div>
-                                            }
+                                            )}
                                         </Link>
+                                        <img
+                                            src={edit}
+                                            alt="Edit"
+                                            className="edit-icon"
+                                            onClick={() => handleEditClick(chat)}
+                                        />
                                     </div>
                                 </td>
                             </tr>
@@ -74,6 +103,14 @@ const Messages = ({ profileInfo }) => {
                     <p>No chats found.</p>
                 )}
             </div>
+            {isModalOpen && (
+                <EditChatModal
+                    show={isModalOpen}
+                    handleClose={closeModal}
+                    chat={selectedChat}
+                    updateChatTitle={updateChatTitle}
+                />
+            )}
         </>
     );
 };

@@ -36,6 +36,21 @@ app.post('/api/updateUserSettings', async (req, res) => {
     }
 });
 
+app.post('/api/updateChatTitle', async (req, res) => {
+    try {
+        const { chatId, title } = req.body;
+
+        // Update the chat document in Firestore
+        await db.collection('chats').doc(chatId).update({ title });
+
+        res.status(200).send('Chat title updated successfully');
+    } catch (error) {
+        console.error('Error updating chat title:', error);
+        res.status(500).json({ error: 'An error occurred while updating chat title' });
+    }
+});
+
+
 app.post('/api/sendMessage', async (req, res) => {
     try {
         const { current_user_id, recipient_id, content } = req.body;
