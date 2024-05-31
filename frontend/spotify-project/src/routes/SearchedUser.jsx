@@ -7,6 +7,7 @@ import SongList from "../components/SongList.jsx";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/searchedUser.css';
 
 export default function SearchedUser({ profileInfo }) {
     const { id } = useParams();
@@ -80,9 +81,8 @@ export default function SearchedUser({ profileInfo }) {
                                     onChange={(e) => setMessage(e.target.value)}
                                     style={{ padding: '10px', borderRadius: '5px', marginRight: '10px' }}
                                 />
-                                <button
+                                <button className="send-button"
                                     onClick={handleSendMessage}
-                                    style={{ padding: '10px 20px', backgroundColor: '#1DB954', color: 'white', border: 'none', borderRadius: '5px' }}
                                 >
                                     Send
                                 </button>
