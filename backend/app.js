@@ -36,6 +36,34 @@ app.post('/api/updateUserSettings', async (req, res) => {
     }
 });
 
+app.post('/api/removeUserFromChat', async (req, res) => {
+    try {
+        const { chatId, userId } = req.body;
+
+        const chatRef = db.collection('chats').doc(chatId);
+        const chatDoc = await chatRef.get();
+
+        if (!chatDoc.exists) {
+            return res.status(404).json({ error: 'Chat not found' });
+        }
+
+        const chatData = chatDoc.data();
+        const updatedParticipants = chatData.participants.filter(participant => participant !== userId);
+
+        if (updatedParticipants.length === 0) {
+            await chatRef.delete();
+            return res.status(200).send('Chat deleted successfully');
+        } else {
+            await chatRef.update({ participants: updatedParticipants });
+            return res.status(200).send('User removed from chat successfully');
+        }
+    } catch (error) {
+        console.error('Error removing user from chat:', error);
+        res.status(500).json({ error: 'An error occurred while removing user from chat' });
+    }
+});
+
+
 app.post('/api/updateChatTitle', async (req, res) => {
     try {
         const { chatId, title } = req.body;
