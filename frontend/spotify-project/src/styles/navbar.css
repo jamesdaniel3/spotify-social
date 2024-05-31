@@ -1,15 +1,17 @@
-/* .toggle-btn {
-    transition: none !important;
-    -webkit-transition: none !important;
-    transition: none;
-    border: 1px;
-}
-.toggle-btn :focus {
-    box-shadow: none;
-    transition: none;
-    border: 1px;
-}
-*/
+
 #nav {
     width: max-content;
+}
+
+.nav-link {
+    color: #1DB954 !important;
+    font-size: 1.5rem !important;
+}
+
+.custom-close-button .btn-close {
+    width: 1.75rem;
+    height: 1.75rem;
+    /* CSS Magic to change the button color*/
+    filter: invert(48%) sepia(92%) saturate(749%) hue-rotate(97deg) brightness(92%) contrast(101%); /* Change color to #1DB954 */
+    opacity: 1; /* Ensure the button is fully opaque */
 }
