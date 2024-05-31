@@ -1,0 +1,16 @@
+.send-button {
+  padding: 10px 20px;
+  background-color: #1DB954;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.send-button:active,
+.send-button:focus:active {
+  background-color: #0d913b;
+}
+
+.send-button:hover {
+  background-color: #0d9f40;
+}
