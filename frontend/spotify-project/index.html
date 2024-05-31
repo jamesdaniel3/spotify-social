@@ -9,5 +9,27 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      function animateAlbum(album, delay) {
+        $(album).css({ top: '100%' }).delay(delay).animate(
+                { top: '-200%' }, // Move the album cover from bottom to top
+                {
+                  duration: 30000, // Duration of the animation
+                  easing: 'linear', // Use linear easing for constant speed
+                  complete: function() {
+                    animateAlbum(album, 0); // Restart the animation
+                  }
+                }
+        );
+      }
+
+      $('.album-cover').each(function(index) {
+        animateAlbum(this, index * 5000); // Stagger the start of each animation
+      });
+    });
+  </script>
   </body>
 </html>

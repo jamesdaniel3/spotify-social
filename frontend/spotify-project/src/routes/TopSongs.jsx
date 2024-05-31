@@ -3,6 +3,7 @@ import Tabbing from '../components/Tabbing';
 import Header from '../components/Header';
 
 const TopSongs = ({ topSongsShort, topSongsMedium, topSongsLong }) => {
+    console.log(topSongsMedium)
     return(
         <>
             <Header title={"top songs"}/>
