@@ -126,11 +126,6 @@ const DiscoverPage = ({ profileInfo }) => {
                         <UserCard key={val.id} username={val.display_name} userId={val.id} currentUserId={profileInfo.id}
                           profilePicture={val.profilePicture} />
                       ))}
-                      {/*{filteredData
-                        .filter(val => val.id !== profileInfo.id) // Filter out the current user's profile
-                        .map((val) => (
-                          <UserCard key={val.id} username={val.display_name} userId={val.id} currentUserId={profileInfo.id} />
-                        ))}  for not displaying urself*/}
                     </div>
                   </div>
                 ) : (
@@ -149,7 +144,7 @@ const DiscoverPage = ({ profileInfo }) => {
                 
                   {loading ? (
                     <div className='loading-container'>
-                      <img src={LoadingIcon} alt='Loading Icon'/>
+                      <img src={LoadingIcon} alt='Loading Icon' style={{height:"8rem", width:"8rem"}}/>
                       <p>Loading...</p>
                     </div>
                     
