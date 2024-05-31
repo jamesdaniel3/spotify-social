@@ -15,19 +15,21 @@ const NavBar = () => {
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${false}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${false}`}
-              placement="end"
+              placement="start"
+              style={{backgroundColor: "#141414"}}
+              backdrop={true}
             >
-              <Offcanvas.Header closeButton />
+              <Offcanvas.Header closeButton className="custom-close-button"/>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                    <Nav.Link href="/">discover</Nav.Link>
-                    <Nav.Link href="/profile">profile</Nav.Link>
-                    <Nav.Link href="/messages">messages</Nav.Link>
-                    <Nav.Link href="/forums">forums</Nav.Link>
-                    <Nav.Link href="/liked-songs">liked songs</Nav.Link>
-                    <Nav.Link href="/top-artists">top artists</Nav.Link>
-                    <Nav.Link href="/top-songs">top songs</Nav.Link>
-                    <Nav.Link onClick={logout}>log out</Nav.Link>
+                    <Nav.Link href="/" className={"nav-link"}>find users</Nav.Link>
+                    <Nav.Link href="/profile" className={"nav-link"}>profile</Nav.Link>
+                    <Nav.Link href="/messages" className={"nav-link"}>messages</Nav.Link>
+                    <Nav.Link href="/forums" className={"nav-link"}>forums</Nav.Link>
+                    <Nav.Link href="/liked-songs" className={"nav-link"}>liked songs</Nav.Link>
+                    <Nav.Link href="/top-artists" className={"nav-link"}>top artists</Nav.Link>
+                    <Nav.Link href="/top-songs" className={"nav-link"}>top songs</Nav.Link>
+                    <Nav.Link onClick={logout} className={"nav-link"}>log out</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

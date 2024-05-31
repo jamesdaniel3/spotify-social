@@ -1,5 +1,6 @@
 .header {
     height: max-content;
+    top: 0;
     width: 100%;
     display: flex;
     align-items: center;
@@ -7,6 +8,8 @@
     padding: 6px 4% 6px 4%;
     margin-bottom: 2%;
     background-color: rgb(20, 20, 20);
+    position: fixed;
+    z-index: 999;
 }
   
 .page-title {

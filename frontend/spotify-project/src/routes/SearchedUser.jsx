@@ -33,7 +33,6 @@ export default function SearchedUser({ profileInfo }) {
 
     const handleSendMessage = async () => {
         try {
-            console.log(id)
             await axios.post('http://localhost:8888/api/sendMessage', {
                 current_user_id: current_user_id,
                 recipient_id: id,
@@ -56,7 +55,8 @@ export default function SearchedUser({ profileInfo }) {
                         className="profile-pic"
                         style={{ marginRight: '20px' }}
                     />
-                    {firebaseInfo.open_for_messages && (
+                    {firebaseInfo.open_for_messages &&
+                        id !== profileInfo.id &&(
                         <div className="message-input-container" style={{ display: 'flex', alignItems: 'center' }}>
                             <input
                                 type="text"
@@ -67,7 +67,7 @@ export default function SearchedUser({ profileInfo }) {
                             />
                             <button
                                 onClick={handleSendMessage}
-                                style={{ padding: '10px 20px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px' }}
+                                style={{ padding: '10px 20px', backgroundColor: '#1DB954', color: 'white', border: 'none', borderRadius: '5px' }}
                             >
                                 Send
                             </button>
