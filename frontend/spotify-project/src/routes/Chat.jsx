@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Message from "../components/Message";
+import '../styles/chat.css';
+import Header from "../components/Header.jsx";
 
 export default function Chat({ profileInfo }) {
     const { id } = useParams();
@@ -15,25 +18,7 @@ export default function Chat({ profileInfo }) {
         try {
             const response = await axios.get(`http://localhost:8888/api/chats/${id}/messages`);
             const messagesData = response.data;
-
-            // Fetch the display name for each sender
-            const updatedMessages = await Promise.all(
-                messagesData.map(async (message) => {
-                    try {
-                        const userResponse = await axios.get(`http://localhost:8888/api/users/${message.sender}`);
-                        const senderDisplayName = userResponse.data.displayName;
-                        return {
-                            ...message,
-                            sender: senderDisplayName,
-                        };
-                    } catch (error) {
-                        console.error("Error fetching sender display name:", error);
-                        return message;
-                    }
-                })
-            );
-
-            setMessages(updatedMessages);
+            setMessages(messagesData);
         } catch (error) {
             console.error("Error fetching messages:", error);
         }
@@ -58,29 +43,32 @@ export default function Chat({ profileInfo }) {
         }
     };
 
-    console.log("Messages:", messages);
-    console.log(sender);
-
     return (
         <>
-            <p>This is a chat with ID: {id}</p>
-            {messages.map((message, index) => (
-                <div key={index}>
-                    <p>Sender: {message.sender}</p>
-                    <p>Content: {message.content}</p>
-                    <p>Timestamp: {message.timestamp}</p>
-                    <hr />
+            <Header title={"messaging"} />
+            <div className="messages">
+                <div className="messages-container">
+                    {messages.map((message, index) => (
+                        <Message
+                            key={index}
+                            content={message.content}
+                            sender={message.sender}
+                            timestamp={message.timestamp}
+                            isOwnMessage={message.sender === sender}
+                        />
+                    ))}
                 </div>
-            ))}
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Type your message"
-                />
-                <button type="submit">Send</button>
-            </form>
+                <form onSubmit={handleSubmit} className="message-form">
+                    <input
+                        type="text"
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        placeholder="Type your message"
+                        className="message-input"
+                    />
+                    <button type="submit" className="send-button">Send</button>
+                </form>
+            </div>
         </>
     );
 }
