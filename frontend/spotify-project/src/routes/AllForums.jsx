@@ -36,7 +36,7 @@ const AllForums = ({profileInfo,}) => {
     }
     return(
         <>
-            <Header title={"forums"} searchPlaceholder={"search forums"}/>
+            <Header title={"forums"}/>
             <div className='main-container'>
                 <Table borderless className='songs' variant='dark'>
                     <tbody>

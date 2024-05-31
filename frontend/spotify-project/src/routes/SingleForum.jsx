@@ -26,7 +26,7 @@ const SingleForum = ({profileInfo}) => {
 
     return(
         <>
-            <Header title={data.name} searchPlaceholder={"search posts"} forForums={true}></Header>
+            <Header title={data.name} forForums={true}></Header>
             <div className='main-container'>
                 <ForumPostModal
                     profileInfo={profileInfo}
