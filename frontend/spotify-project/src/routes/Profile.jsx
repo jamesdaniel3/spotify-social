@@ -108,7 +108,18 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
                 </div>
               </div>
           )}
+          {!firebaseInfo.display_info &&
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '60vh'
+              }}>
+                <h2>{firebaseInfo.display_name} is not displaying their current favorites</h2>
+              </div>
+          }
         </div>
+
 
         <SettingsModal
             show={showModal}
