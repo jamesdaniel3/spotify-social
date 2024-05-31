@@ -117,7 +117,8 @@ app.post('/api/sendMessage', async (req, res) => {
             // If chat document does not exist, create a new one
             await db.collection('chats').add({
                 participants: [current_user_id, recipient_id],
-                messages: [newMessageId]
+                messages: [newMessageId],
+                title:""
             });
         }
 
