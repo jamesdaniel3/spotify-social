@@ -84,14 +84,14 @@ const Profile = ({ profileInfo, topArtistsShort, topSongsShort }) => {
                   src={settingsIcon}
                   alt="settings icon"
                   className="settings-icon"
-                  style={{ zIndex: 1000, height: "20px", width: "20px" }}
+                  style={{ zIndex: 998, height: "20px", width: "20px" }}
                   onClick={handleSettingsClick}
               />
               <img
                   src={firebaseInfo.private_page ? locked : unlocked}
                   alt={firebaseInfo.private_page ? "locked" : "unlocked"}
                   className="privacy-icon"
-                  style={{ zIndex: 1000, height: "20px", width: "20px", marginLeft: "10px" }}
+                  style={{ zIndex: 998, height: "20px", width: "20px", marginLeft: "10px" }}
               />
             </h2>
             <p style={{ color: "white" }}>{profileInfo.followers.total} followers</p>
