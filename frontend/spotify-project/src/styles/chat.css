@@ -41,3 +41,8 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.chats {
+    padding-top: 5rem;
+    padding-bottom: 8rem;
+}
