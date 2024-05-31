@@ -13,9 +13,96 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
 
-
 app.use(cors());
 app.use(express.json());
+
+
+app.post('/api/updateUserSettings', async (req, res) => {
+    try {
+        const { userId, displayInfo, privatePage } = req.body;
+
+        // Ensure the values are not undefined
+        const updateData = {};
+        if (displayInfo !== undefined) updateData.display_info = displayInfo;
+        if (privatePage !== undefined) updateData.private_page = privatePage;
+
+        // Update the user document in Firestore
+        await db.collection('users').doc(userId).update(updateData);
+
+        res.status(200).send('User settings updated successfully');
+    } catch (error) {
+        console.error('Error updating user settings:', error);
+        res.status(500).json({ error: 'An error occurred while updating user settings' });
+    }
+});
+
+app.post('/api/sendMessage', async (req, res) => {
+    try {
+        const { current_user_id, recipient_id, content } = req.body;
+
+        // Create a new message document
+        const newMessageRef = db.collection('messages').doc();
+        const newMessageId = newMessageRef.id;
+        const timestamp = new Date().toISOString();
+
+        await newMessageRef.set({
+            content: content,
+            sender: current_user_id,
+            timestamp: timestamp
+        });
+
+        // Check if a chat document exists with the participants
+        const chatQuery = await db.collection('chats')
+            .where('participants', 'array-contains', current_user_id)
+            .get();
+
+        let chatDoc = null;
+
+        chatQuery.forEach(doc => {
+            const participants = doc.data().participants;
+            if (participants.includes(recipient_id)) {
+                chatDoc = doc;
+            }
+        });
+
+        if (chatDoc) {
+            // If chat document exists, update it with the new message ID
+            await db.collection('chats').doc(chatDoc.id).update({
+                messages: admin.firestore.FieldValue.arrayUnion(newMessageId)
+            });
+        } else {
+            // If chat document does not exist, create a new one
+            await db.collection('chats').add({
+                participants: [current_user_id, recipient_id],
+                messages: [newMessageId]
+            });
+        }
+
+        res.status(200).send('Message sent successfully');
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'An error occurred while sending the message' });
+    }
+});
+
+app.post('/api/updateUserTopData', async (req, res) => {
+    try {
+        const { userId, topArtists, topSongs } = req.body;
+
+        // Ensure the values are not undefined
+        const updateData = {};
+        if (topArtists !== undefined) updateData.recent_top_artists = topArtists;
+        if (topSongs !== undefined) updateData.recent_top_songs = topSongs;
+
+        // Update the user document in Firestore
+        await db.collection('users').doc(userId).update(updateData);
+
+        res.status(200).send('User top data updated successfully');
+    } catch (error) {
+        console.error('Error updating user top data:', error);
+        res.status(500).json({ error: 'An error occurred while updating user top data' });
+    }
+});
 
 
 app.post('/api/chats', async (req, res) => {
@@ -73,6 +160,7 @@ app.get('/api/users/:userId', async (req, res) => {
 });
 
 
+// Create message and add it to chat
 app.post('/api/chats/:chatId/messages', async (req, res) => {
     try {
         const chatId = req.params.chatId;
@@ -138,18 +226,7 @@ app.get('/api/chats/:chatId/messages', async (req, res) => {
 });
 
 
-const generateRandomString = length => {
-    let text = ``;
-    const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
-
-    for(let i = 0; i < length; i++){
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
-}
-
-const stateKey = `spotify_auth_state`
+//DISCOVER PAGE START
 
 // get all users
 app.get("/posts", async (req, res) => {
@@ -169,7 +246,7 @@ app.get("/posts", async (req, res) => {
 });
 
 
-// get specific users
+// check specific users
 app.get("/user/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -193,9 +270,10 @@ app.get("/user/:id", async (req, res) => {
 
 app.post('/user', async (req, res) => {
     try {
-        const { id, display_name, followers } = req.body;
+        const { id, display_name, followers, profilePicture } = req.body;
 
-        console.log('Received POST request with body:', req.body);
+        // console.log('Received POST request with body:', req.body);
+        // console.log(profilePicture);
 
         // Create a new document in the 'users' collection with a specific ID
         const docRef = db.collection('users').doc(id);
@@ -203,8 +281,10 @@ app.post('/user', async (req, res) => {
             artists_displayed: [],
             display_name: display_name,
             followers: followers,
+            profilePicture: profilePicture,
             open_for_messages: true,
             private_page: true,
+            display_info: true,
             recently_seen: [],
             songs_displayed: []
         });
@@ -216,25 +296,52 @@ app.post('/user', async (req, res) => {
     }
 });
 
+app.put("/posts/:currentUserId", async (req, res) => {
+    try {
+        const currentUserId = req.params.currentUserId; // Correctly access currentUserId from params
+        const clickedUserId = req.body.clickedUserId;
 
-// // change recently_seen  
-// app.put("/posts/:id", async (req, res) => {
-//     try {
-//         const id = req.params.id;
-//         const username = req.body.recently_seen;
+        // console.log(`Updating user ${currentUserId} with recently seen: ${clickedUserId}`);
+        
+        const docRef = db.collection("users").doc(currentUserId);
+        const doc = await docRef.get();
 
-//         console.log(`Updating user ${id} with recently seen: ${username}`);
-        
-//         await updateDoc(doc(db, "users", id), {
-//             recently_seen: arrayUnion(username)
-//         });
-        
-//         res.status(200).json({ message: "success" });
-//     } catch (e) {
-//         console.error(`Error updating recently seen for user ${id}:`, e);
-//         res.status(400).json({ error: e.message });
-//     }
-// });
+        if (!doc.exists) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const data = doc.data();
+        const recentlySeen = data.recently_seen || [];
+
+        if (!recentlySeen.includes(clickedUserId)) {
+            await docRef.update({
+                recently_seen: admin.firestore.FieldValue.arrayUnion(clickedUserId)
+            });
+            res.status(200).json({ message: "success" });
+        } else {
+            res.status(200).json({ message: "User already in recently seen" });
+        }
+    } catch (e) {
+        console.error(`Error updating recently seen for user:`, e);
+        res.status(400).json({ error: e.message });
+    }
+});
+
+
+//LOGIN
+
+const generateRandomString = length => {
+    let text = ``;
+    const possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
+
+    for(let i = 0; i < length; i++){
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+}
+
+const stateKey = `spotify_auth_state`
 
 
 app.get(`/login`, (request, response) => {

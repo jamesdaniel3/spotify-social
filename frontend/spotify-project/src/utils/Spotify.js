@@ -103,11 +103,11 @@ axios.defaults.headers['Content-Type'] = 'application/json';
 export const getCurrentUserProfile = () => axios.get('/me');
 
 export const getTopArtists = (time_range = 'short_term') => {
-    return axios.get(`/me/top/artists?time_range=${time_range}`);
+    return axios.get(`/me/top/artists?time_range=${time_range}&limit=50`);
 };
 
 export const getTopSongs = (time_range = 'short_term') => {
-    return axios.get(`/me/top/tracks?time_range=${time_range}`);
+    return axios.get(`/me/top/tracks?time_range=${time_range}&limit=50`);
 };
 
 export const getLikedSongs = () => {

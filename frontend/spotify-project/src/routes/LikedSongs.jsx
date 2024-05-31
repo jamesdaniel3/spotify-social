@@ -3,8 +3,6 @@ import LikedSongList from '../components/LikedSongList';
 import Header from '../components/Header';
 
 const LikedSongs = ({likedSongs}) => {
-    console.log(likedSongs)
-
     return(
         <>
             <Header title={"recently liked songs"} searchPlaceholder={"search songs"}/>

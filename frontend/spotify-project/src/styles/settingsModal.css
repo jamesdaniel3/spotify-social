@@ -1,0 +1,24 @@
+.modal-header-custom {
+    background-color: black;
+    color: white;
+}
+
+.modal-body-custom {
+    background-color: black;
+    color: white;
+}
+
+.modal-footer-custom {
+    background-color: black;
+    color: white;
+}
+
+.custom-checkbox .form-check-input:checked {
+    background-color: green;
+    border-color: green;
+}
+
+.custom-checkbox .form-check-input:checked + .form-check-label::before {
+    background-color: green;
+    border-color: green;
+}

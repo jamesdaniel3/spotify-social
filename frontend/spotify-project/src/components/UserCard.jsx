@@ -5,31 +5,31 @@ import '../styles/discover.css';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 
-const UserCard = ({ username, userId }) => {
+const UserCard = ({ username, userId, currentUserId, profilePicture }) => {
   const handleAddToRecent = async (e) => {
     e.preventDefault();
-    console.log(username, userId);
-    if (username) {
-      const body = {
-        recently_seen: username, // Correctly send username in the body
-      };
-      try {
-        await axios.put(`http://localhost:8888/posts/${userId}`, body); // Ensure `userId` matches the backend parameter
-        // Assuming fetchData is declared elsewhere and re-fetches the user data.
-        // fetchData();
-      } catch (error) {
-        console.error("Error updating recently seen:", error);
-      }
-    }
+    console.log(username, userId, currentUserId);
+    try {
+      if (username) {
+        const body = {
+          clickedUserId: userId,
+        }
+        await axios.put(`http://localhost:8888/posts/${currentUserId}`, body); 
+      }; 
+          // Assuming fetchData is declared elsewhere and re-fetches the user data.
+          // fetchData();
+        } catch (error) {
+          console.error("Error updating recently seen:", error);
+        }
   };
 
   return (
     <Card id='user-card'>
       <div onClick={handleAddToRecent}>
-        <Link to={`/profile`} className='profile-link'>
+        <Link to={`/profile/${userId}`} className='profile-link'>
           <div className='top-container'>
             <div className="circle-container">
-              <img src={imageUrl} alt="User Profile" className="profile-image" />
+              <img src={profilePicture} alt="User Profile" className="profile-image" />
             </div>
           </div>
           <Card.Body id='card-body'>
